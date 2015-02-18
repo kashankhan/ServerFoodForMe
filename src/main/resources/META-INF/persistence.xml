@@ -11,7 +11,7 @@
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/foodforme" />
-			<property name="javax.persistence.jdbc.user" value="user" />
+			<property name="javax.persistence.jdbc.user" value="farhan" />
 			<property name="javax.persistence.jdbc.password" value="password" />
 
 			<!-- EclipseLink should create the database schema automatically -->

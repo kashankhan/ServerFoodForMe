@@ -11,4 +11,40 @@
 							http://www.springframework.org/schema/mvc
          					http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
+    <!-- start cron job -->
+
+    <!-- our cron job -->
+    <bean name="myRecipe" class="de.tum.in.foodforme.model.Recipe"/>
+    
+	<bean name="myQuartzJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass"
+			value="de.tum.in.foodforme.cron.MyCronJob" />
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="myRecipe" value-ref="myRecipe" />
+			</map>
+		</property>
+	</bean>
+
+    <!-- timer for the job -->
+	<bean id="myCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="myQuartzJob" />
+		<property name="cronExpression" value="10 * * * * ?" />
+	</bean>
+    <!-- end cron job -->
+	
+
+    <!-- master who manages all cron jobs in the system -->
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="jobDetails">
+			<list>
+				<ref bean="myQuartzJob" />
+			</list>
+		</property>
+		<property name="triggers">
+			<list>
+				<ref bean="myCronTrigger" />
+			</list>
+		</property>
+	</bean>
 </beans>
