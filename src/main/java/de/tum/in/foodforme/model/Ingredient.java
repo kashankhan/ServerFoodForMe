@@ -30,7 +30,7 @@ public class Ingredient extends AbstractEntity{
 	private @Getter @Setter String quantity;
 	private @Getter @Setter String unit;
 	private @Getter @Setter String displayQuantity;
-	private @Getter @Setter String recipeId;
+
 	@OneToOne
 	private @Getter @Setter IngredientInfo ingredientInfo;
 	

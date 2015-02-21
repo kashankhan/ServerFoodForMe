@@ -40,29 +40,10 @@ public class Recipe extends AbstractEntity {
 	private @Getter @Setter String  yieldUnit;
 	private @Getter @Setter String instructions;
 	
-//	private @Getter @Setter Integer RecipeID;
-//	private @Getter @Setter String Title;
-//	private @Getter @Setter Integer StarRating;
-//	private @Getter @Setter Integer TotalTries;
-//	private @Getter @Setter String Category;
-//	private @Getter @Setter String Subcategory;
-//	private @Getter @Setter String Cuisine;
-//	private @Getter @Setter Boolean IsBookmark;
-//	private @Getter @Setter Integer ReviewCount;
-//	private @Getter @Setter String ImageURL;
-//	private @Getter @Setter String HeroPhotoUrl;
-//	private @Getter @Setter Integer ActiveMinutes;
-//	private @Getter @Setter String Description;
-//	private @Getter @Setter String PrimaryIngredient;
-//	private @Getter @Setter Integer TotalMinutes;
-//	private @Getter @Setter Integer YieldNumber;
-//	private @Getter @Setter String  YieldUnit;
-//	private @Getter @Setter String Instructions;
-	
 	@OneToOne
-	private @Getter @Setter Nutrition NutritionInfo;
+	private @Getter @Setter Nutrition nutritionInfo;
 	
 	@OneToMany
-	private @Getter @Setter List<Ingredient> Ingredients;
+	private @Getter @Setter List<Ingredient> ingredients;
 	
 }

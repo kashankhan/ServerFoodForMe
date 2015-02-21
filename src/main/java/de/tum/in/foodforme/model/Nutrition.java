@@ -1,6 +1,9 @@
 package de.tum.in.foodforme.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
@@ -15,8 +18,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ToString
-public class Nutrition extends AbstractEntity{
-
+public class Nutrition{
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	protected @Getter @Setter Long nId;
+	
 	private @Getter @Setter Integer caloriesFromFat;
 	private @Getter @Setter Integer cholesterol;
 	private @Getter @Setter Integer cholesterolPct;
