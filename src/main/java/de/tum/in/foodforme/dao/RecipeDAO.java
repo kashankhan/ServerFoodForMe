@@ -24,6 +24,27 @@ public class RecipeDAO extends GenericDAO<Recipe>{
 			return null;
 		}
 	}
+	
+//	TypedQuery<Media> query = em.createQuery("SELECT NEW package_name.Media(m.title, b.isbn, b.authors)
+//			+ " FROM Book b, Media m" 
+//			+ " WHERE b.isbn = :isbn"                         
+//			+ " OR lower(m.title) LIKE :title"                         
+//			+ " OR b.authors LIKE :authors", Media.class); 
+//	
+	public List<Recipe> getRecipes(String keyword){
+		keyword = "%" + keyword.toLowerCase() + "%";
+		TypedQuery<Recipe> q = em.createQuery("select r from Recipe r where LOWER(r.Title) LIKE :keyword"
+				+ " OR LOWER(r.Category) LIKE :keyword"
+				+ " OR LOWER(r.Subcategory) LIKE :keyword",
+				Recipe.class);
+		q.setParameter("keyword", keyword);
+		try {
+			return q.getResultList();
+		}
+		catch(NoResultException e) {
+			return null;
+		}
+	}
 
 	@Override
 	public List<Recipe> findAll(){

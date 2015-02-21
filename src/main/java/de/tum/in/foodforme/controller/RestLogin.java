@@ -16,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import com.google.gson.Gson;
 
 import de.tum.in.foodforme.model.Recipe;
-import de.tum.in.foodforme.model.User;
+import de.tum.in.foodforme.model.UserProfile;
 
 @Controller
 @RequestMapping("/rest/login")
@@ -24,19 +24,20 @@ public class RestLogin {
 
 	private static final String URL = "http://api.bigoven.com/recipe/47725?api_key=dvx3yd92dN1feo7ywI9bT5M50708VrCq";
 	
-	@RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
-	public @ResponseBody User get(@PathVariable("id") String uId) {
-		return new User(uId, uId);
-    }	
-
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	@ResponseBody
-	public void register(@RequestBody User dto) {
-	}
-	
-	@RequestMapping(value = "/get2/{id}", method = RequestMethod.GET)
-	public @ResponseBody User test(@PathVariable("id") String acId,
-			@RequestParam(value="query", required=false) String query) {
-		return new User(query, query);
-    }
+//	@RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
+//	public @ResponseBody UserProfile get(@PathVariable("id") String uId) {
+//		return new UserProfile();
+//    }	
+//
+//	@RequestMapping(value = "/register", method = RequestMethod.POST)
+//	@ResponseBody
+//	public void register(@RequestBody UserProfile dto) {
+//	}
+//	
+//	@RequestMapping(value = "/get2/{id}", method = RequestMethod.GET)
+//	public @ResponseBody UserProfile test(@PathVariable("id") String acId,
+//			@RequestParam(value="query", required=false) String query) {
+//		//return new UserProfile(query, query);
+//		return new UserProfile();
+//    }
 }
