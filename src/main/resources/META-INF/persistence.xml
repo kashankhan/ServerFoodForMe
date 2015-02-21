@@ -8,7 +8,7 @@
 		<class>de.tum.in.foodforme.model.Nutrition</class>
 		<class>de.tum.in.foodforme.model.Recipe</class>
 		<class>de.tum.in.foodforme.model.User</class>
-		<class>de.tum.in.foodforme.model.IngredientDepartment</class>
+		<class>de.tum.in.foodforme.model.IngredientInfo</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/foodforme" />

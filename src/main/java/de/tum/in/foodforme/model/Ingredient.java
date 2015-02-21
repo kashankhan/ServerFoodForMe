@@ -18,20 +18,20 @@ import lombok.ToString;
 @ToString
 public class Ingredient extends AbstractEntity{
 	
-	private @Getter @Setter Integer IngredientID;
-	private @Getter @Setter Integer DisplayIndex;
-	private @Getter @Setter Integer IsHeading;
-	private @Getter @Setter Boolean IsLinked;
-	private @Getter @Setter String MetricDisplayQuantity;
-	private @Getter @Setter Integer MetricQuantity;
-	private @Getter @Setter String MetricUnit;
-	private @Getter @Setter String Name;
-	private @Getter @Setter String PreparationNotes;
-	private @Getter @Setter String Quantity;
-	private @Getter @Setter String Unit;
-	private @Getter @Setter String DisplayQuantity;
-	
+	private @Getter @Setter Integer ingredientID;
+	private @Getter @Setter Integer displayIndex;
+	private @Getter @Setter Integer isHeading;
+	private @Getter @Setter Boolean isLinked;
+	private @Getter @Setter String metricDisplayQuantity;
+	private @Getter @Setter Integer metricQuantity;
+	private @Getter @Setter String metricUnit;
+	private @Getter @Setter String name;
+	private @Getter @Setter String preparationNotes;
+	private @Getter @Setter String quantity;
+	private @Getter @Setter String unit;
+	private @Getter @Setter String displayQuantity;
+	private @Getter @Setter String recipeId;
 	@OneToOne
-	private @Getter @Setter IngredientDepartment IngredientInfo;
+	private @Getter @Setter IngredientInfo ingredientInfo;
 	
 }

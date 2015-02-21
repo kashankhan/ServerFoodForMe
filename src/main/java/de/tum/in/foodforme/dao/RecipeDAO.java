@@ -15,7 +15,7 @@ public class RecipeDAO extends GenericDAO<Recipe>{
 	}
 
 	public Recipe getRecipe(int recipeId){
-		TypedQuery<Recipe> q = em.createQuery("select r from Recipe r where r.RecipeID=:recipeId", Recipe.class);
+		TypedQuery<Recipe> q = em.createQuery("select r from Recipe r where r.recipeId=:recipeId", Recipe.class);
 		q.setParameter("recipeId", recipeId);
 		try {
 			return q.getSingleResult();
@@ -25,17 +25,11 @@ public class RecipeDAO extends GenericDAO<Recipe>{
 		}
 	}
 	
-//	TypedQuery<Media> query = em.createQuery("SELECT NEW package_name.Media(m.title, b.isbn, b.authors)
-//			+ " FROM Book b, Media m" 
-//			+ " WHERE b.isbn = :isbn"                         
-//			+ " OR lower(m.title) LIKE :title"                         
-//			+ " OR b.authors LIKE :authors", Media.class); 
-//	
 	public List<Recipe> getRecipes(String keyword){
 		keyword = "%" + keyword.toLowerCase() + "%";
-		TypedQuery<Recipe> q = em.createQuery("select r from Recipe r where LOWER(r.Title) LIKE :keyword"
-				+ " OR LOWER(r.Category) LIKE :keyword"
-				+ " OR LOWER(r.Subcategory) LIKE :keyword",
+		TypedQuery<Recipe> q = em.createQuery("select r from Recipe r where LOWER(r.title) LIKE :keyword"
+				+ " OR LOWER(r.category) LIKE :keyword"
+				+ " OR LOWER(r.subcategory) LIKE :keyword",
 				Recipe.class);
 		q.setParameter("keyword", keyword);
 		try {
@@ -48,7 +42,7 @@ public class RecipeDAO extends GenericDAO<Recipe>{
 
 	@Override
 	public List<Recipe> findAll(){
-		TypedQuery<Recipe> q = em.createQuery("select u from User u", Recipe.class);
+		TypedQuery<Recipe> q = em.createQuery("select r from Recipe r", Recipe.class);
 		return q.getResultList();
 	}
 }

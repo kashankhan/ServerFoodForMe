@@ -17,28 +17,28 @@ import lombok.ToString;
 @ToString
 public class Nutrition extends AbstractEntity{
 
-	private @Getter @Setter Integer CaloriesFromFat;
-	private @Getter @Setter Integer Cholesterol;
-	private @Getter @Setter Integer CholesterolPct;
-	private @Getter @Setter Integer DietaryFiber;
-	private @Getter @Setter Integer DietaryFiberPct;
-	private @Getter @Setter Integer MonoFat;
-	private @Getter @Setter Integer PolyFat;
-	private @Getter @Setter Integer Potassium;
-	private @Getter @Setter Integer PotassiumPct;
-	private @Getter @Setter Integer Protein;
-	private @Getter @Setter Integer ProteinPct;
-	private @Getter @Setter Integer SatFat;
-	private @Getter @Setter Integer SatFatPct;
-	private @Getter @Setter String SingularYieldUnit;
-	private @Getter @Setter Integer Sodium;
-	private @Getter @Setter Integer SodiumPct;
-	private @Getter @Setter Integer Sugar;
-	private @Getter @Setter Integer TotalCalories;
-	private @Getter @Setter Integer TotalCarbs;
-	private @Getter @Setter Integer TotalCarbsPct;
-	private @Getter @Setter Integer TotalFat;
-	private @Getter @Setter Integer TotalFatPct;
-	private @Getter @Setter Integer TransFat;
+	private @Getter @Setter Integer caloriesFromFat;
+	private @Getter @Setter Integer cholesterol;
+	private @Getter @Setter Integer cholesterolPct;
+	private @Getter @Setter Integer dietaryFiber;
+	private @Getter @Setter Integer dietaryFiberPct;
+	private @Getter @Setter Integer monoFat;
+	private @Getter @Setter Integer polyFat;
+	private @Getter @Setter Integer potassium;
+	private @Getter @Setter Integer potassiumPct;
+	private @Getter @Setter Integer protein;
+	private @Getter @Setter Integer proteinPct;
+	private @Getter @Setter Integer satFat;
+	private @Getter @Setter Integer satFatPct;
+	private @Getter @Setter String singularYieldUnit;
+	private @Getter @Setter Integer sodium;
+	private @Getter @Setter Integer sodiumPct;
+	private @Getter @Setter Integer sugar;
+	private @Getter @Setter Integer totalCalories;
+	private @Getter @Setter Integer totalCarbs;
+	private @Getter @Setter Integer totalCarbsPct;
+	private @Getter @Setter Integer totalFat;
+	private @Getter @Setter Integer totalFatPct;
+	private @Getter @Setter Integer transFat;
 
 }
