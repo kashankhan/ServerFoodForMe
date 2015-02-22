@@ -25,7 +25,6 @@ public class Recipe extends AbstractEntity {
 	private @Getter @Setter Integer recipeId;
 	private @Getter @Setter String title;
 	private @Getter @Setter Integer starRating;
-	private @Getter @Setter Integer totalTries;
 	private @Getter @Setter String category;
 	private @Getter @Setter String subcategory;
 	private @Getter @Setter String cuisine;
