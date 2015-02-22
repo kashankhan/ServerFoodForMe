@@ -24,6 +24,9 @@ public class RecipeDTO extends GenericDTO {
 		for(int i = 0; i < results.size(); i++){ 
              JsonObject recipeInfo = results.get(i).getAsJsonObject(); 
              Recipe recipe = parseRecipe(recipeInfo);
+             Integer totalTries = (recipeInfo.get("TotalTries").isJsonNull()) ? 0 : recipeInfo.get("TotalTries").getAsInt();
+             recipe.setTotalTries(totalTries);
+             
              recipeDAO.save(recipe);
              recipes.add(recipe);
          } 
@@ -40,8 +43,6 @@ public class RecipeDTO extends GenericDTO {
         recipe.setRecipeId(recipeId);
         recipe.setTitle(recipeInfo.get("Title").getAsString());
         recipe.setStarRating(recipeInfo.get("StarRating").getAsInt());
-        Integer totalTries = (recipeInfo.get("TotalTries").isJsonNull()) ? 0 : recipeInfo.get("TotalTries").getAsInt();
-        recipe.setTotalTries(totalTries);
         recipe.setCategory(recipeInfo.get("Category").getAsString());
         recipe.setSubcategory(recipeInfo.get("Subcategory").getAsString());
         String cuisine = (recipeInfo.get("Cuisine").isJsonNull()) ? "" : recipeInfo.get("Cuisine").getAsString();
@@ -63,7 +64,7 @@ public class RecipeDTO extends GenericDTO {
          recipe.setPrimaryIngredient(recipeInfo.get("PrimaryIngredient").getAsString()); 
          recipe.setTotalMinutes((recipeInfo.get("TotalMinutes").isJsonNull()) ? 0 : recipeInfo.get("TotalMinutes").getAsInt());  
          recipe.setYieldNumber(recipeInfo.get("YieldNumber").getAsInt());
-         recipe.setYieldUnit(recipeInfo.get("yieldUnit").getAsString());
+         recipe.setYieldUnit(recipeInfo.get("YieldUnit").getAsString());
          recipe.setInstructions(recipeInfo.get("Instructions").getAsString());
 
          //Nutrition
@@ -117,7 +118,7 @@ public class RecipeDTO extends GenericDTO {
 		Ingredient ingredient = new Ingredient();
 		ingredient.setDisplayIndex(responseInfo.get("DisplayIndex").getAsInt());
 		ingredient.setIngredientID(responseInfo.get("IngredientID").getAsInt());
-		ingredient.setIsHeading(responseInfo.get("IsHeading").getAsInt());
+		ingredient.setIsHeading((responseInfo.get("IsHeading").isJsonNull()) ? false : responseInfo.get("IsHeading").getAsBoolean());
 		ingredient.setIsLinked(responseInfo.get("IsLinked").getAsBoolean());
 		ingredient.setMetricDisplayQuantity(responseInfo.get("MetricDisplayQuantity").getAsString());
 		ingredient.setMetricQuantity(responseInfo.get("MetricQuantity").getAsInt());
@@ -126,14 +127,14 @@ public class RecipeDTO extends GenericDTO {
 		ingredient.setName(responseInfo.get("Name").getAsString());
 		ingredient.setPreparationNotes((responseInfo.get("PreparationNotes").isJsonNull()) ? "" : responseInfo.get("PreparationNotes").getAsString());
 		ingredient.setQuantity(responseInfo.get("Quantity").getAsInt());
-		ingredient.setUnit(responseInfo.get("Unit").getAsString());
+		ingredient.setUnit((responseInfo.get("Unit").isJsonNull()) ? "" : responseInfo.get("Unit").getAsString());
 		ingredient.setDisplayQuantity((responseInfo.get("DisplayQuantity").isJsonNull()) ? "" : responseInfo.get("DisplayQuantity").getAsString());
 		
         //IngredientInfo
 		JsonObject responseIngredientInfo = responseInfo.getAsJsonObject("IngredientInfo");
 		IngredientInfo ingredientInfo = new IngredientInfo();
-		ingredientInfo.setDepartment((responseIngredientInfo.get("Department").isJsonNull()) ? "" : responseInfo.get("Department").getAsString());
-		ingredientInfo.setName((responseIngredientInfo.get("Name").isJsonNull()) ? "" : responseInfo.get("Name").getAsString()); 
+		ingredientInfo.setDepartment((responseIngredientInfo.get("Department").isJsonNull()) ? "" : responseIngredientInfo.get("Department").getAsString());
+		ingredientInfo.setName((responseIngredientInfo.get("Name").isJsonNull()) ? "" : responseIngredientInfo.get("Name").getAsString()); 
 		ingredient.setIngredientInfo(ingredientInfo);
 		
 		return ingredient;

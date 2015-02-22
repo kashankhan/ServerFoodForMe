@@ -15,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ToString
-public class IngredientInfo extends AbstractEntity{
+public class IngredientInfo{
 	
 	private @Getter @Setter String department;
 	private @Getter @Setter String name;

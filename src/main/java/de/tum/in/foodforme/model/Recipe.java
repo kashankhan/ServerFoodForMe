@@ -2,6 +2,7 @@ package de.tum.in.foodforme.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -38,6 +39,7 @@ public class Recipe extends AbstractEntity {
 	private @Getter @Setter Integer totalMinutes;
 	private @Getter @Setter Integer yieldNumber;
 	private @Getter @Setter String  yieldUnit;
+	@Column(columnDefinition="text")
 	private @Getter @Setter String instructions;
 	
 	@OneToOne

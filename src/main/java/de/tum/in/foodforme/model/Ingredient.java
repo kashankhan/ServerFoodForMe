@@ -20,7 +20,7 @@ public class Ingredient extends AbstractEntity{
 	
 	private @Getter @Setter Integer ingredientID;
 	private @Getter @Setter Integer displayIndex;
-	private @Getter @Setter Integer isHeading;
+	private @Getter @Setter Boolean isHeading;
 	private @Getter @Setter Boolean isLinked;
 	private @Getter @Setter String metricDisplayQuantity;
 	private @Getter @Setter Integer metricQuantity;
