@@ -27,7 +27,7 @@ public class Ingredient extends AbstractEntity{
 	private @Getter @Setter String metricUnit;
 	private @Getter @Setter String name;
 	private @Getter @Setter String preparationNotes;
-	private @Getter @Setter String quantity;
+	private @Getter @Setter Integer quantity;
 	private @Getter @Setter String unit;
 	private @Getter @Setter String displayQuantity;
 

@@ -41,7 +41,7 @@ public class Recipe extends AbstractEntity {
 	private @Getter @Setter String instructions;
 	
 	@OneToOne
-	private @Getter @Setter Nutrition nutritionInfo;
+	private @Getter @Setter NutritionInfo nutritionInfo;
 	
 	@OneToMany
 	private @Getter @Setter List<Ingredient> ingredients;

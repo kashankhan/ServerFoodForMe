@@ -18,11 +18,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ToString
-public class Nutrition{
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected @Getter @Setter Long nId;
+public class NutritionInfo extends AbstractEntity{
 	
 	private @Getter @Setter Integer caloriesFromFat;
 	private @Getter @Setter Integer cholesterol;
