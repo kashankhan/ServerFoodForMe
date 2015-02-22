@@ -24,9 +24,6 @@ public class RecipeDTO extends GenericDTO {
 		for(int i = 0; i < results.size(); i++){ 
              JsonObject recipeInfo = results.get(i).getAsJsonObject(); 
              Recipe recipe = parseRecipe(recipeInfo);
-             Integer totalTries = (recipeInfo.get("TotalTries").isJsonNull()) ? 0 : recipeInfo.get("TotalTries").getAsInt();
-             recipe.setTotalTries(totalTries);
-             
              recipeDAO.save(recipe);
              recipes.add(recipe);
          } 
@@ -52,6 +49,8 @@ public class RecipeDTO extends GenericDTO {
         recipe.setReviewCount(recipeInfo.get("ReviewCount").getAsInt());
         recipe.setImageUrl(recipeInfo.get("ImageURL").getAsString());
         recipe.setLargeImageUrl(recipeInfo.get("HeroPhotoUrl").getAsString());
+        Integer totalTries = (this.hasObject(recipeInfo, "TotalTries")) ? recipeInfo.get("TotalTries").getAsInt() : 0;
+        recipe.setTotalTries(totalTries);
         
         return recipe;
 	}
