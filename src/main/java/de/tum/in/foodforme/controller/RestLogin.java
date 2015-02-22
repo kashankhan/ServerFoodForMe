@@ -22,7 +22,6 @@ import de.tum.in.foodforme.model.UserProfile;
 @RequestMapping("/rest/login")
 public class RestLogin {
 
-	private static final String URL = "http://api.bigoven.com/recipe/47725?api_key=dvx3yd92dN1feo7ywI9bT5M50708VrCq";
 	
 //	@RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
 //	public @ResponseBody UserProfile get(@PathVariable("id") String uId) {

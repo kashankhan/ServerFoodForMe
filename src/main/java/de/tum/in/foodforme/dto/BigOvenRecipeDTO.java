@@ -15,49 +15,64 @@ public class BigOvenRecipeDTO extends RecipeDTO {
 
 	@Override
 	public List<Recipe> parseRecipes(String requestBody) {
-		List<Recipe> recipes = new ArrayList<Recipe>();
-		JsonObject response = this.getJsonObject(requestBody);
-		JsonArray results =  response.getAsJsonArray("Results");
-		for(int i = 0; i < results.size(); i++){ 
-             JsonObject recipeInfo = results.get(i).getAsJsonObject(); 
-             Recipe recipe = parseRecipe(recipeInfo);
-             recipeDAO.save(recipe);
-             recipes.add(recipe);
-         } 
 		
-		return recipes;	
+		try {
+			List<Recipe> recipes = new ArrayList<Recipe>();
+			JsonObject response = this.getJsonObject(requestBody);
+			JsonArray results =  response.getAsJsonArray("Results");
+			for(int i = 0; i < results.size(); i++){ 
+	             JsonObject recipeInfo = results.get(i).getAsJsonObject(); 
+	             Recipe recipe = parseRecipe(recipeInfo);
+	             recipeDAO.save(recipe);
+	             recipes.add(recipe);
+	         } 
+			
+			return recipes;	
+			
+		} catch (Exception e) {
+	           System.out.println(e.getMessage());
+		     	return null;
+		}
+
 	}
 	
 	
 	public Recipe parseRecipeDetail(String requestBody) {
-		 JsonObject recipeInfo = this.getJsonObject(requestBody);
-         Recipe recipe = parseRecipe(recipeInfo);
-         recipe.setActiveMinutes((recipeInfo.get("ActiveMinutes").isJsonNull()) ? 0 : recipeInfo.get("ActiveMinutes").getAsInt());
-         recipe.setDescription(recipeInfo.get("Description").getAsString());
-         recipe.setPrimaryIngredient(recipeInfo.get("PrimaryIngredient").getAsString()); 
-         recipe.setTotalMinutes((recipeInfo.get("TotalMinutes").isJsonNull()) ? 0 : recipeInfo.get("TotalMinutes").getAsInt());  
-         recipe.setYieldNumber(recipeInfo.get("YieldNumber").getAsInt());
-         recipe.setYieldUnit(recipeInfo.get("YieldUnit").getAsString());
-         recipe.setInstructions(recipeInfo.get("Instructions").getAsString());
-
-         //Nutrition
-         JsonObject nutritionResponseInfo = recipeInfo.getAsJsonObject("NutritionInfo");
-         NutritionInfo nutritionInfo = parseNutritionInfo(nutritionResponseInfo);
-         recipe.setNutritionInfo(nutritionInfo);
-         
-         //Ingredient
-        List<Ingredient> ingredients = new ArrayList<Ingredient>();
-     	JsonArray results =  recipeInfo.getAsJsonArray("Ingredients");
-     	for(int i = 0; i < results.size(); i++){ 
-             JsonObject ingredientInfo = results.get(i).getAsJsonObject(); 
-             Ingredient ingredient = parseIngredient(ingredientInfo);
-             ingredients.add(ingredient);
-         } 
-     	recipe.setIngredients(ingredients);
-     	
-     	recipeDAO.save(recipe);
 		
-     	return recipe;
+		try {
+			 JsonObject recipeInfo = this.getJsonObject(requestBody);
+	         Recipe recipe = parseRecipe(recipeInfo);
+	         recipe.setActiveMinutes((recipeInfo.get("ActiveMinutes").isJsonNull()) ? 0 : recipeInfo.get("ActiveMinutes").getAsInt());
+	         recipe.setDescription(recipeInfo.get("Description").getAsString());
+	         recipe.setPrimaryIngredient(recipeInfo.get("PrimaryIngredient").getAsString()); 
+	         recipe.setTotalMinutes((recipeInfo.get("TotalMinutes").isJsonNull()) ? 0 : recipeInfo.get("TotalMinutes").getAsInt());  
+	         recipe.setYieldNumber(recipeInfo.get("YieldNumber").getAsInt());
+	         recipe.setYieldUnit(recipeInfo.get("YieldUnit").getAsString());
+	         recipe.setInstructions(recipeInfo.get("Instructions").getAsString());
+
+	         //Nutrition
+	         JsonObject nutritionResponseInfo = recipeInfo.getAsJsonObject("NutritionInfo");
+	         NutritionInfo nutritionInfo = parseNutritionInfo(nutritionResponseInfo);
+	         recipe.setNutritionInfo(nutritionInfo);
+	         
+	         //Ingredient
+	        List<Ingredient> ingredients = new ArrayList<Ingredient>();
+	     	JsonArray results =  recipeInfo.getAsJsonArray("Ingredients");
+	     	for(int i = 0; i < results.size(); i++){ 
+	             JsonObject ingredientInfo = results.get(i).getAsJsonObject(); 
+	             Ingredient ingredient = parseIngredient(ingredientInfo);
+	             ingredients.add(ingredient);
+	         } 
+	     	recipe.setIngredients(ingredients);
+	     	
+	     	recipeDAO.save(recipe);
+			
+	     	return recipe;
+		} catch (Exception e) {
+            System.out.println(e.getMessage());
+	     	return null;
+		}
+
 	}
 	
 	private Recipe parseRecipe(JsonObject recipeInfo) {

@@ -38,8 +38,6 @@ public class BigOvenRecipeBAL  extends RecipeBAL {
 	@Override
 	public Recipe fetchRecipe(int recipeId) {
 		String uri =  bigOvenBaseUri + "/recipe/" + recipeId + "?api_key=" + bigOvenApiKey;
-		System.out.println(uri);
-
 		String requestBody = this.sendGetRequest(uri);
 		Recipe recipe = recipeDTO.parseRecipeDetail(requestBody);
 		return recipe;

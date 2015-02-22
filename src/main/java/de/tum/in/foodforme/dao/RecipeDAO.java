@@ -7,6 +7,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import de.tum.in.foodforme.model.Recipe;
+import de.tum.in.foodforme.model.UserProfile;
 
 public class RecipeDAO extends GenericDAO<Recipe>{
 
@@ -24,7 +25,7 @@ public class RecipeDAO extends GenericDAO<Recipe>{
 			return null;
 		}
 	}
-	
+
 	public List<Recipe> getRecipes(String keyword){
 		keyword = "%" + keyword.toLowerCase() + "%";
 		TypedQuery<Recipe> q = em.createQuery("select r from Recipe r where LOWER(r.title) LIKE :keyword"
@@ -42,14 +43,22 @@ public class RecipeDAO extends GenericDAO<Recipe>{
 
 	@Override
 	public List<Recipe> findAll(){
-		TypedQuery<Recipe> q = em.createQuery("select r from Recipe r", Recipe.class);
-		return q.getResultList();
+		try {
+			TypedQuery<Recipe> q = em.createQuery("select r from Recipe r", Recipe.class);
+			return q.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
-	
-	@Override
+
 	public List<Recipe> findAll(Integer page, Integer resultPerPage){
-		TypedQuery<Recipe> q = em.createQuery("select r from Recipe r", Recipe.class);
-		q.setFirstResult(page).setMaxResults(resultPerPage);
-		return q.getResultList();
+		try {
+			TypedQuery<Recipe> q = em.createQuery("select r from Recipe r", Recipe.class);
+			q.setFirstResult(page).setMaxResults(resultPerPage);
+			return q.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+
 	}
 }

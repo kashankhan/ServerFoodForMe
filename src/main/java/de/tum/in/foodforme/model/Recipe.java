@@ -2,6 +2,7 @@ package de.tum.in.foodforme.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -41,10 +42,10 @@ public class Recipe extends AbstractEntity {
 	@Column(columnDefinition="text")
 	private @Getter @Setter String instructions;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private @Getter @Setter NutritionInfo nutritionInfo;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private @Getter @Setter List<Ingredient> ingredients;
 	
 }

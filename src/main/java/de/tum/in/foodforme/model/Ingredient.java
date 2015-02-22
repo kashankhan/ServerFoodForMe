@@ -1,5 +1,6 @@
 package de.tum.in.foodforme.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
@@ -31,7 +32,7 @@ public class Ingredient extends AbstractEntity{
 	private @Getter @Setter String unit;
 	private @Getter @Setter String displayQuantity;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private @Getter @Setter IngredientInfo ingredientInfo;
 	
 }

@@ -23,6 +23,4 @@ public abstract class GenericDAO<T extends AbstractEntity> {
 	}
 
 	public abstract List<T> findAll();
-	
-	public abstract List<T> findAll(Integer page, Integer resultPerPage);
 }
