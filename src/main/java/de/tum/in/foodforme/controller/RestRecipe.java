@@ -24,8 +24,7 @@ public class RestRecipe {
 	@ResponseBody
 	public Recipe recipedetail(@RequestParam("recipeId") Integer recipeId){
 		Recipe recipe = recipeDAO.getRecipe(recipeId);
-		if(recipe == null){
-			recipe = new Recipe();
+		if(recipe == null || recipe.getInstructions() == null || recipe.getInstructions().isEmpty()){
 			recipe = recipeBAL.fetchRecipe(recipeId);
 		}
 		return recipe;
