@@ -66,6 +66,7 @@ public class RestRecipe {
 
 		String requestBody = getRecipe();
 		Recipe recipe = recipeDTO.parseRecipeDetail(requestBody);
+		
 		String uri =  bigOvenBaseUri + "/recipe?title_kw=" + keyword + "?pg=" +page + "?rpp=" +resultPerPage +  "?api_key=" + bigOvenApiKey;		
 
 

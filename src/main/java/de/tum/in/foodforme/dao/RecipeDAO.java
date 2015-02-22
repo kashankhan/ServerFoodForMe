@@ -45,4 +45,11 @@ public class RecipeDAO extends GenericDAO<Recipe>{
 		TypedQuery<Recipe> q = em.createQuery("select r from Recipe r", Recipe.class);
 		return q.getResultList();
 	}
+	
+	@Override
+	public List<Recipe> findAll(Integer page, Integer resultPerPage){
+		TypedQuery<Recipe> q = em.createQuery("select r from Recipe r", Recipe.class);
+		q.setFirstResult(page).setMaxResults(resultPerPage);
+		return q.getResultList();
+	}
 }
