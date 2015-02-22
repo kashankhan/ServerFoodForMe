@@ -10,11 +10,10 @@ public class GenericDTO {
 		JsonObject jsonObject = (JsonObject)parser.parse(response);
 		return jsonObject;
 	}
-	
+
 	boolean hasObject(JsonObject object, String attribute) {
 		boolean exists = false;
 		if(object.has(attribute) && object.get(attribute).isJsonNull()) {
-		    //it has it, do appropriate processing
 			exists = true;
 		}
 		return exists;

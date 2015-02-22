@@ -15,88 +15,86 @@ public class BigOvenRecipeDTO extends RecipeDTO {
 
 	@Override
 	public List<Recipe> parseRecipes(String requestBody) {
-		
+
 		try {
 			List<Recipe> recipes = new ArrayList<Recipe>();
 			JsonObject response = this.getJsonObject(requestBody);
 			JsonArray results =  response.getAsJsonArray("Results");
 			for(int i = 0; i < results.size(); i++){ 
-	             JsonObject recipeInfo = results.get(i).getAsJsonObject(); 
-	             Recipe recipe = parseRecipe(recipeInfo);
-	             recipeDAO.save(recipe);
-	             recipes.add(recipe);
-	         } 
-			
+				JsonObject recipeInfo = results.get(i).getAsJsonObject(); 
+				Recipe recipe = parseRecipe(recipeInfo);
+				recipeDAO.save(recipe);
+				recipes.add(recipe);
+			} 
+
 			return recipes;	
-			
-		} catch (Exception e) {
-	           System.out.println(e.getMessage());
-		     	return null;
-		}
 
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
 	}
-	
-	
+
+
 	public Recipe parseRecipeDetail(String requestBody) {
-		
+
 		try {
-			 JsonObject recipeInfo = this.getJsonObject(requestBody);
-	         Recipe recipe = parseRecipe(recipeInfo);
-	         recipe.setActiveMinutes((recipeInfo.get("ActiveMinutes").isJsonNull()) ? 0 : recipeInfo.get("ActiveMinutes").getAsInt());
-	         recipe.setDescription(recipeInfo.get("Description").getAsString());
-	         recipe.setPrimaryIngredient(recipeInfo.get("PrimaryIngredient").getAsString()); 
-	         recipe.setTotalMinutes((recipeInfo.get("TotalMinutes").isJsonNull()) ? 0 : recipeInfo.get("TotalMinutes").getAsInt());  
-	         recipe.setYieldNumber(recipeInfo.get("YieldNumber").getAsInt());
-	         recipe.setYieldUnit(recipeInfo.get("YieldUnit").getAsString());
-	         recipe.setInstructions(recipeInfo.get("Instructions").getAsString());
+			JsonObject recipeInfo = this.getJsonObject(requestBody);
+			Recipe recipe = parseRecipe(recipeInfo);
+			recipe.setActiveMinutes((recipeInfo.get("ActiveMinutes").isJsonNull()) ? 0 : recipeInfo.get("ActiveMinutes").getAsInt());
+			recipe.setDescription(recipeInfo.get("Description").getAsString());
+			recipe.setPrimaryIngredient(recipeInfo.get("PrimaryIngredient").getAsString()); 
+			recipe.setTotalMinutes((recipeInfo.get("TotalMinutes").isJsonNull()) ? 0 : recipeInfo.get("TotalMinutes").getAsInt());  
+			recipe.setYieldNumber(recipeInfo.get("YieldNumber").getAsInt());
+			recipe.setYieldUnit(recipeInfo.get("YieldUnit").getAsString());
+			recipe.setInstructions(recipeInfo.get("Instructions").getAsString());
 
-	         //Nutrition
-	         JsonObject nutritionResponseInfo = recipeInfo.getAsJsonObject("NutritionInfo");
-	         NutritionInfo nutritionInfo = parseNutritionInfo(nutritionResponseInfo);
-	         recipe.setNutritionInfo(nutritionInfo);
-	         
-	         //Ingredient
-	        List<Ingredient> ingredients = new ArrayList<Ingredient>();
-	     	JsonArray results =  recipeInfo.getAsJsonArray("Ingredients");
-	     	for(int i = 0; i < results.size(); i++){ 
-	             JsonObject ingredientInfo = results.get(i).getAsJsonObject(); 
-	             Ingredient ingredient = parseIngredient(ingredientInfo);
-	             ingredients.add(ingredient);
-	         } 
-	     	recipe.setIngredients(ingredients);
-	     	
-	     	recipeDAO.save(recipe);
-			
-	     	return recipe;
+			//Nutrition
+			JsonObject nutritionResponseInfo = recipeInfo.getAsJsonObject("NutritionInfo");
+			NutritionInfo nutritionInfo = parseNutritionInfo(nutritionResponseInfo);
+			recipe.setNutritionInfo(nutritionInfo);
+
+			//Ingredient
+			List<Ingredient> ingredients = new ArrayList<Ingredient>();
+			JsonArray results =  recipeInfo.getAsJsonArray("Ingredients");
+			for(int i = 0; i < results.size(); i++){ 
+				JsonObject ingredientInfo = results.get(i).getAsJsonObject(); 
+				Ingredient ingredient = parseIngredient(ingredientInfo);
+				ingredients.add(ingredient);
+			} 
+			recipe.setIngredients(ingredients);
+
+			recipeDAO.save(recipe);
+
+			return recipe;
 		} catch (Exception e) {
-            System.out.println(e.getMessage());
-	     	return null;
+			System.out.println(e.getMessage());
+			return null;
 		}
-
 	}
-	
+
 	private Recipe parseRecipe(JsonObject recipeInfo) {
-        int recipeId = recipeInfo.get("RecipeID").getAsInt();
-        Recipe recipe = recipeDAO.getRecipe(recipeId);
-        if(recipe == null) {
-       	 recipe = new Recipe();
-        }
-        recipe.setRecipeId(recipeId);
-        recipe.setTitle(recipeInfo.get("Title").getAsString());
-        recipe.setStarRating(recipeInfo.get("StarRating").getAsInt());
-        recipe.setCategory(recipeInfo.get("Category").getAsString());
-        recipe.setSubcategory(recipeInfo.get("Subcategory").getAsString());
-        String cuisine = (recipeInfo.get("Cuisine").isJsonNull()) ? "" : recipeInfo.get("Cuisine").getAsString();
-        recipe.setCuisine(cuisine);
-        Boolean isBookmark = (recipeInfo.get("IsBookmark").isJsonNull()) ? false : recipeInfo.get("IsBookmark").getAsBoolean();
-        recipe.setIsBookmark(isBookmark);
-        recipe.setReviewCount(recipeInfo.get("ReviewCount").getAsInt());
-        recipe.setImageUrl(recipeInfo.get("ImageURL").getAsString());
-        recipe.setLargeImageUrl(recipeInfo.get("HeroPhotoUrl").getAsString());
+		int recipeId = recipeInfo.get("RecipeID").getAsInt();
+		Recipe recipe = recipeDAO.getRecipe(recipeId);
+		if(recipe == null) {
+			recipe = new Recipe();
+		}
+		recipe.setRecipeId(recipeId);
+		recipe.setTitle(recipeInfo.get("Title").getAsString());
+		recipe.setStarRating(recipeInfo.get("StarRating").getAsInt());
+		recipe.setCategory(recipeInfo.get("Category").getAsString());
+		recipe.setSubcategory(recipeInfo.get("Subcategory").getAsString());
+		String cuisine = (recipeInfo.get("Cuisine").isJsonNull()) ? "" : recipeInfo.get("Cuisine").getAsString();
+		recipe.setCuisine(cuisine);
+		Boolean isBookmark = (recipeInfo.get("IsBookmark").isJsonNull()) ? false : recipeInfo.get("IsBookmark").getAsBoolean();
+		recipe.setIsBookmark(isBookmark);
+		recipe.setReviewCount(recipeInfo.get("ReviewCount").getAsInt());
+		recipe.setImageUrl(recipeInfo.get("ImageURL").getAsString());
+		recipe.setLargeImageUrl(recipeInfo.get("HeroPhotoUrl").getAsString());
 
-        return recipe;
+		return recipe;
 	}
-	
+
 	private NutritionInfo parseNutritionInfo(JsonObject responseInfo) {
 		NutritionInfo nutrition = new NutritionInfo();
 		nutrition.setCaloriesFromFat(responseInfo.get("CaloriesFromFat").getAsInt());
@@ -120,10 +118,10 @@ public class BigOvenRecipeDTO extends RecipeDTO {
 		nutrition.setTotalCarbsPct(responseInfo.get("TotalCarbsPct").getAsInt());	
 		nutrition.setTotalFat(responseInfo.get("TotalFat").getAsInt());	
 		nutrition.setTotalFatPct(responseInfo.get("TotalFatPct").getAsInt());	
-		
+
 		return nutrition;
 	}
-	
+
 	private Ingredient parseIngredient(JsonObject responseInfo) {
 		Ingredient ingredient = new Ingredient();
 		ingredient.setDisplayIndex(responseInfo.get("DisplayIndex").getAsInt());
@@ -139,14 +137,14 @@ public class BigOvenRecipeDTO extends RecipeDTO {
 		ingredient.setQuantity(responseInfo.get("Quantity").getAsInt());
 		ingredient.setUnit((responseInfo.get("Unit").isJsonNull()) ? "" : responseInfo.get("Unit").getAsString());
 		ingredient.setDisplayQuantity((responseInfo.get("DisplayQuantity").isJsonNull()) ? "" : responseInfo.get("DisplayQuantity").getAsString());
-		
-        //IngredientInfo
+
+		//IngredientInfo
 		JsonObject responseIngredientInfo = responseInfo.getAsJsonObject("IngredientInfo");
 		IngredientInfo ingredientInfo = new IngredientInfo();
 		ingredientInfo.setDepartment((responseIngredientInfo.get("Department").isJsonNull()) ? "" : responseIngredientInfo.get("Department").getAsString());
 		ingredientInfo.setName((responseIngredientInfo.get("Name").isJsonNull()) ? "" : responseIngredientInfo.get("Name").getAsString()); 
 		ingredient.setIngredientInfo(ingredientInfo);
-		
+
 		return ingredient;
 	}
 

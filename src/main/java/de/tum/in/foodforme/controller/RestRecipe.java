@@ -19,7 +19,7 @@ public class RestRecipe {
 
 	private final RecipeDAO recipeDAO = DAOManager.createRecipeDAO();
 	private final RecipeBAL recipeBAL = RecipeBALManger.createRecipeBAL(RecipeBalType.BIG_OVEN);
-	
+
 	@RequestMapping(value="/recipedetail")
 	@ResponseBody
 	public Recipe recipedetail(@RequestParam("recipeId") Integer recipeId){
@@ -43,23 +43,4 @@ public class RestRecipe {
 		return recipes;
 
 	}
-	
-	
-//	@RequestMapping(value="/method9")
-//	@ResponseBody
-//	public String method9(@RequestParam("id") int id){
-//		return "method9 with id= "+id;
-//	}
-
-//	@RequestMapping(value = "/recipedetail/{recipeId}", method = RequestMethod.GET)
-//	public @ResponseBody Recipe recipedetail(@PathVariable("recipeId") int recipeId) {
-//		Recipe recipe = recipeDAO.getRecipe(recipeId);
-//		if(recipe == null){
-//			recipe = new Recipe();
-//			recipe = recipeBAL.fetchRecipe(recipeId);
-//		}
-//		return recipe;
-//	}
-
-	
 }

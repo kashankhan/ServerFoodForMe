@@ -6,7 +6,7 @@ import de.tum.in.foodforme.constants.GlobalConstants.RecipeBalType;
 public class RecipeBALManger {
 
 	BigOvenRecipeBAL bigOverRecieBAL = new BigOvenRecipeBAL();
-	
+
 	public static RecipeBAL createRecipeBAL(RecipeBalType balType) {
 		RecipeBAL recipeBAL;
 		switch (balType) {

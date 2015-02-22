@@ -5,9 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-
 import de.tum.in.foodforme.model.Recipe;
-import de.tum.in.foodforme.model.UserProfile;
 
 public class RecipeDAO extends GenericDAO<Recipe>{
 

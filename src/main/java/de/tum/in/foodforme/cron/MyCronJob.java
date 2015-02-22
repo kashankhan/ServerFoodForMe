@@ -9,7 +9,7 @@ import de.tum.in.foodforme.model.Recipe;
 public class MyCronJob extends QuartzJobBean{
 
 	private Recipe myRecipe;
-	
+
 	@Override
 	protected void executeInternal(JobExecutionContext context)
 			throws JobExecutionException {
