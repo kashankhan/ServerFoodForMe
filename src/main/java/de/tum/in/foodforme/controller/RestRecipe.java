@@ -36,7 +36,7 @@ public class RestRecipe {
 	public List<Recipe> searchRecipes(@RequestParam("keyword") String keyword, 
 			@RequestParam(value="page", required=true) Integer page,
 			@RequestParam(value="resultPerPage", required=true) Integer resultPerPage){
-		List<Recipe> recipes = (List<Recipe>)recipeDAO.getRecipes(keyword);
+		List<Recipe> recipes = (List<Recipe>)recipeDAO.getRecipes(keyword, page, resultPerPage);
 		if(recipes.isEmpty()){
 			recipes = recipeBAL.searchRecipes(keyword, page, resultPerPage);
 		}

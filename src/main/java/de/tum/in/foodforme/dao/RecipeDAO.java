@@ -13,6 +13,16 @@ public class RecipeDAO extends GenericDAO<Recipe>{
 		super(em);
 	}
 
+	@Override
+	public List<Recipe> findAll(){
+		try {
+			TypedQuery<Recipe> q = em.createQuery("select r from Recipe r", Recipe.class);
+			return q.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+	
 	public Recipe getRecipe(int recipeId){
 		TypedQuery<Recipe> q = em.createQuery("select r from Recipe r where r.recipeId=:recipeId", Recipe.class);
 		q.setParameter("recipeId", recipeId);
@@ -38,25 +48,19 @@ public class RecipeDAO extends GenericDAO<Recipe>{
 			return null;
 		}
 	}
-
-	@Override
-	public List<Recipe> findAll(){
+	
+	public List<Recipe> getRecipes(String keyword, Integer page, Integer resultPerPage){
 		try {
-			TypedQuery<Recipe> q = em.createQuery("select r from Recipe r", Recipe.class);
-			return q.getResultList();
-		} catch (NoResultException e) {
-			return null;
-		}
-	}
-
-	public List<Recipe> findAll(Integer page, Integer resultPerPage){
-		try {
-			TypedQuery<Recipe> q = em.createQuery("select r from Recipe r", Recipe.class);
+			keyword = "%" + keyword.toLowerCase() + "%";
+			TypedQuery<Recipe> q = em.createQuery("select r from Recipe r where LOWER(r.title) LIKE :keyword"
+					+ " OR LOWER(r.category) LIKE :keyword"
+					+ " OR LOWER(r.subcategory) LIKE :keyword",
+					Recipe.class);
+			q.setParameter("keyword", keyword);
 			q.setFirstResult(page).setMaxResults(resultPerPage);
 			return q.getResultList();
 		} catch (NoResultException e) {
 			return null;
 		}
-
 	}
 }
