@@ -10,4 +10,8 @@ public class DAOManager {
 	public static RecipeDAO createRecipeDAO(){
 		return new RecipeDAO(factory.createEntityManager());
 	}
+	
+	public static UserProfileDAO createUserProfileDAO(){
+		return new UserProfileDAO(factory.createEntityManager());
+	}
 }
