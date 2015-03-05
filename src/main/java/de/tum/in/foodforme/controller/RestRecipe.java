@@ -1,16 +1,21 @@
 package de.tum.in.foodforme.controller;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import de.tum.in.foodforme.bal.RecipeBAL;
 import de.tum.in.foodforme.bal.RecipeBALManger;
 import de.tum.in.foodforme.constants.GlobalConstants.RecipeBalType;
 import de.tum.in.foodforme.dao.DAOManager;
 import de.tum.in.foodforme.dao.RecipeDAO;
+import de.tum.in.foodforme.model.Ingredient;
 import de.tum.in.foodforme.model.Recipe;
 
 @Controller
@@ -43,4 +48,22 @@ public class RestRecipe {
 		return recipes;
 
 	}
+	
+	
+	@RequestMapping(value = "/sysnrecipes", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Recipe> syncRecipes(){
+		List<Recipe> sycnRecipes = new ArrayList<Recipe>();
+		List<Recipe> recipes = (List<Recipe>)recipeDAO.getUnSyncRecipes();
+		for(Iterator<Recipe> r = recipes.iterator(); r.hasNext(); ) {
+			Recipe recipe = r.next();
+			if(recipe == null || recipe.getInstructions() == null || recipe.getInstructions().isEmpty()){
+				Recipe syncRecipe = recipeBAL.fetchRecipe(recipe.getRecipeId());
+				sycnRecipes.add(syncRecipe);
+			}
+		}
+		return sycnRecipes;
+				
+	}
+	
 }

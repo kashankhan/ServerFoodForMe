@@ -63,4 +63,14 @@ public class RecipeDAO extends GenericDAO<Recipe>{
 			return null;
 		}
 	}
+	
+	public List<Recipe> getUnSyncRecipes(){
+		try {
+			TypedQuery<Recipe> q = em.createQuery("select r from Recipe r where r.instructions IS NULL", Recipe.class);
+			q.setMaxResults(10);
+			return q.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 }
