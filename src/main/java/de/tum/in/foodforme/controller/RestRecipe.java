@@ -47,8 +47,8 @@ public class RestRecipe {
 		return recipes;
 
 	}
-	
-	
+
+
 	@RequestMapping(value = "/sysnrecipes", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Recipe> syncRecipes(){
@@ -58,11 +58,13 @@ public class RestRecipe {
 			Recipe recipe = r.next();
 			if(recipe == null || recipe.getInstructions() == null || recipe.getInstructions().isEmpty()){
 				Recipe syncRecipe = recipeBAL.fetchRecipe(recipe.getRecipeId());
-				sycnRecipes.add(syncRecipe);
+				if(syncRecipe != null) {
+					sycnRecipes.add(syncRecipe);
+				}
 			}
 		}
 		return sycnRecipes;
-				
+
 	}
-	
+
 }
