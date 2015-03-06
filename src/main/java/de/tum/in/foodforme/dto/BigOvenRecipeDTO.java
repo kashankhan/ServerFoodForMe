@@ -41,13 +41,13 @@ public class BigOvenRecipeDTO extends RecipeDTO {
 		try {
 			JsonObject recipeInfo = this.getJsonObject(requestBody);
 			Recipe recipe = parseRecipe(recipeInfo);
-			recipe.setActiveMinutes((recipeInfo.get("ActiveMinutes").isJsonNull()) ? 0 : recipeInfo.get("ActiveMinutes").getAsInt());
-			recipe.setDescription(recipeInfo.get("Description").getAsString());
-			recipe.setPrimaryIngredient(recipeInfo.get("PrimaryIngredient").getAsString()); 
-			recipe.setTotalMinutes((recipeInfo.get("TotalMinutes").isJsonNull()) ? 0 : recipeInfo.get("TotalMinutes").getAsInt());  
-			recipe.setYieldNumber(recipeInfo.get("YieldNumber").getAsInt());
-			recipe.setYieldUnit(recipeInfo.get("YieldUnit").getAsString());
-			recipe.setInstructions(recipeInfo.get("Instructions").getAsString());
+			recipe.setActiveMinutes(getJsonObjectAsInt(recipeInfo, "ActiveMinutes"));
+			recipe.setDescription(getJsonObjectAsString(recipeInfo, "Description"));
+			recipe.setPrimaryIngredient(getJsonObjectAsString(recipeInfo, "PrimaryIngredient")); 
+			recipe.setTotalMinutes(getJsonObjectAsInt(recipeInfo, "TotalMinutes"));  
+			recipe.setYieldNumber(getJsonObjectAsInt(recipeInfo, "YieldNumber"));
+			recipe.setYieldUnit(getJsonObjectAsString(recipeInfo, "YieldUnit"));
+			recipe.setInstructions(getJsonObjectAsString(recipeInfo, "Instructions"));
 
 			//Nutrition
 			JsonObject nutritionResponseInfo = recipeInfo.getAsJsonObject("NutritionInfo");
@@ -80,69 +80,65 @@ public class BigOvenRecipeDTO extends RecipeDTO {
 			recipe = new Recipe();
 		}
 		recipe.setRecipeId(recipeId);
-		recipe.setTitle(recipeInfo.get("Title").getAsString());
-		recipe.setStarRating(recipeInfo.get("StarRating").getAsInt());
-		recipe.setCategory(recipeInfo.get("Category").getAsString());
-		recipe.setSubcategory(recipeInfo.get("Subcategory").getAsString());
-		String cuisine = (recipeInfo.get("Cuisine").isJsonNull()) ? "" : recipeInfo.get("Cuisine").getAsString();
-		recipe.setCuisine(cuisine);
-		Boolean isBookmark = (recipeInfo.get("IsBookmark").isJsonNull()) ? false : recipeInfo.get("IsBookmark").getAsBoolean();
-		recipe.setIsBookmark(isBookmark);
-		recipe.setReviewCount(recipeInfo.get("ReviewCount").getAsInt());
-		recipe.setImageUrl(recipeInfo.get("ImageURL").getAsString());
-		recipe.setLargeImageUrl(recipeInfo.get("HeroPhotoUrl").getAsString());
-
+		recipe.setTitle(getJsonObjectAsString(recipeInfo, "Title"));
+		recipe.setStarRating(getJsonObjectAsInt(recipeInfo, "StarRating"));
+		recipe.setCategory(getJsonObjectAsString(recipeInfo, "Category"));
+		recipe.setSubcategory(getJsonObjectAsString(recipeInfo, "Subcategory"));
+		recipe.setCuisine(getJsonObjectAsString(recipeInfo, "Cuisine"));
+		recipe.setIsBookmark(getJsonObjectAsBoolean(recipeInfo, "IsBookmark"));
+		recipe.setReviewCount(getJsonObjectAsInt(recipeInfo, "ReviewCount"));
+		recipe.setImageUrl(getJsonObjectAsString(recipeInfo, "ImageURL"));
+		recipe.setLargeImageUrl(getJsonObjectAsString(recipeInfo, "HeroPhotoUrl"));
 		return recipe;
 	}
 
 	private NutritionInfo parseNutritionInfo(JsonObject responseInfo) {
 		NutritionInfo nutrition = new NutritionInfo();
-		nutrition.setCaloriesFromFat(responseInfo.get("CaloriesFromFat").getAsInt());
-		nutrition.setCholesterol(responseInfo.get("Cholesterol").getAsInt());
-		nutrition.setCholesterolPct(responseInfo.get("CholesterolPct").getAsInt());
-		nutrition.setDietaryFiber(responseInfo.get("DietaryFiber").getAsInt());
-		nutrition.setDietaryFiberPct(responseInfo.get("DietaryFiberPct").getAsInt());
-		nutrition.setMonoFat(responseInfo.get("MonoFat").getAsInt());
-		nutrition.setPolyFat(responseInfo.get("PolyFat").getAsInt());
-		nutrition.setPotassium(responseInfo.get("Potassium").getAsInt());
-		nutrition.setPotassiumPct(responseInfo.get("PotassiumPct").getAsInt());
-		nutrition.setProtein(responseInfo.get("Protein").getAsInt());		
-		nutrition.setProteinPct(responseInfo.get("ProteinPct").getAsInt());	
-		nutrition.setSatFat(responseInfo.get("SatFat").getAsInt());	
-		nutrition.setSingularYieldUnit(responseInfo.get("SingularYieldUnit").getAsString());	
-		nutrition.setSodium(responseInfo.get("Sodium").getAsInt());	
-		nutrition.setSodiumPct(responseInfo.get("SodiumPct").getAsInt());	
-		nutrition.setSugar(responseInfo.get("Sugar").getAsInt());	
-		nutrition.setTotalCalories(responseInfo.get("TotalCalories").getAsInt());	
-		nutrition.setTotalCarbs(responseInfo.get("TotalCarbs").getAsInt());	
-		nutrition.setTotalCarbsPct(responseInfo.get("TotalCarbsPct").getAsInt());	
-		nutrition.setTotalFat(responseInfo.get("TotalFat").getAsInt());	
-		nutrition.setTotalFatPct(responseInfo.get("TotalFatPct").getAsInt());	
+		nutrition.setCaloriesFromFat(getJsonObjectAsInt(responseInfo, "CaloriesFromFat"));
+		nutrition.setCholesterol(getJsonObjectAsInt(responseInfo, "Cholesterol"));
+		nutrition.setCholesterolPct(getJsonObjectAsInt(responseInfo, "CholesterolPct"));
+		nutrition.setDietaryFiber(getJsonObjectAsInt(responseInfo, "DietaryFiber"));
+		nutrition.setDietaryFiberPct(getJsonObjectAsInt(responseInfo, "DietaryFiberPct"));
+		nutrition.setMonoFat(getJsonObjectAsInt(responseInfo, "MonoFat"));
+		nutrition.setPolyFat(getJsonObjectAsInt(responseInfo, "PolyFat"));
+		nutrition.setPotassium(getJsonObjectAsInt(responseInfo, "Potassium"));
+		nutrition.setPotassiumPct(getJsonObjectAsInt(responseInfo, "PotassiumPct"));
+		nutrition.setProtein(getJsonObjectAsInt(responseInfo, "Protein"));		
+		nutrition.setProteinPct(getJsonObjectAsInt(responseInfo, "ProteinPct"));	
+		nutrition.setSatFat(getJsonObjectAsInt(responseInfo, "SatFat"));	
+		nutrition.setSingularYieldUnit(getJsonObjectAsString(responseInfo, "SingularYieldUnit"));	
+		nutrition.setSodium(getJsonObjectAsInt(responseInfo, "Sodium"));	
+		nutrition.setSodiumPct(getJsonObjectAsInt(responseInfo, "SodiumPct"));	
+		nutrition.setSugar(getJsonObjectAsInt(responseInfo, "Sugar"));	
+		nutrition.setTotalCalories(getJsonObjectAsInt(responseInfo, "TotalCalories"));	
+		nutrition.setTotalCarbs(getJsonObjectAsInt(responseInfo, "TotalCarbs"));	
+		nutrition.setTotalCarbsPct(getJsonObjectAsInt(responseInfo, "TotalCarbsPct"));	
+		nutrition.setTotalFat(getJsonObjectAsInt(responseInfo, "TotalFat"));	
+		nutrition.setTotalFatPct(getJsonObjectAsInt(responseInfo, "TotalFatPct"));	
 
 		return nutrition;
 	}
 
 	private Ingredient parseIngredient(JsonObject responseInfo) {
 		Ingredient ingredient = new Ingredient();
-		ingredient.setDisplayIndex(responseInfo.get("DisplayIndex").getAsInt());
-		ingredient.setIngredientID(responseInfo.get("IngredientID").getAsInt());
-		ingredient.setIsHeading((responseInfo.get("IsHeading").isJsonNull()) ? false : responseInfo.get("IsHeading").getAsBoolean());
-		ingredient.setIsLinked(responseInfo.get("IsLinked").getAsBoolean());
-		ingredient.setMetricDisplayQuantity(responseInfo.get("MetricDisplayQuantity").getAsString());
-		ingredient.setMetricQuantity(responseInfo.get("MetricQuantity").getAsInt());
-		ingredient.setMetricUnit(responseInfo.get("MetricUnit").getAsString());
-		ingredient.setMetricUnit(responseInfo.get("MetricUnit").getAsString());
-		ingredient.setName(responseInfo.get("Name").getAsString());
-		ingredient.setPreparationNotes((responseInfo.get("PreparationNotes").isJsonNull()) ? "" : responseInfo.get("PreparationNotes").getAsString());
-		ingredient.setQuantity(responseInfo.get("Quantity").getAsInt());
-		ingredient.setUnit((responseInfo.get("Unit").isJsonNull()) ? "" : responseInfo.get("Unit").getAsString());
-		ingredient.setDisplayQuantity((responseInfo.get("DisplayQuantity").isJsonNull()) ? "" : responseInfo.get("DisplayQuantity").getAsString());
+		ingredient.setDisplayIndex(getJsonObjectAsInt(responseInfo, "DisplayIndex"));
+		ingredient.setIngredientID(getJsonObjectAsInt(responseInfo, "IngredientID"));
+		ingredient.setIsHeading(getJsonObjectAsBoolean(responseInfo, "IsHeading"));
+		ingredient.setIsLinked(getJsonObjectAsBoolean(responseInfo, "IsLinked"));
+		ingredient.setMetricDisplayQuantity(getJsonObjectAsString(responseInfo, "MetricDisplayQuantity"));
+		ingredient.setMetricQuantity(getJsonObjectAsInt(responseInfo, "MetricQuantity"));
+		ingredient.setMetricUnit(getJsonObjectAsString(responseInfo, "MetricUnit"));
+		ingredient.setName(getJsonObjectAsString(responseInfo, "Name"));
+		ingredient.setPreparationNotes(getJsonObjectAsString(responseInfo, "PreparationNotes"));
+		ingredient.setQuantity(getJsonObjectAsInt(responseInfo, "Quantity"));
+		ingredient.setUnit(getJsonObjectAsString(responseInfo, "Unit"));
+		ingredient.setDisplayQuantity(getJsonObjectAsString(responseInfo, "DisplayQuantity"));
 
 		//IngredientInfo
 		JsonObject responseIngredientInfo = responseInfo.getAsJsonObject("IngredientInfo");
 		IngredientInfo ingredientInfo = new IngredientInfo();
-		ingredientInfo.setDepartment((responseIngredientInfo.get("Department").isJsonNull()) ? "" : responseIngredientInfo.get("Department").getAsString());
-		ingredientInfo.setName((responseIngredientInfo.get("Name").isJsonNull()) ? "" : responseIngredientInfo.get("Name").getAsString()); 
+		ingredientInfo.setDepartment(getJsonObjectAsString(responseIngredientInfo, "Department"));
+		ingredientInfo.setName(getJsonObjectAsString(responseIngredientInfo, "Name")); 
 		ingredient.setIngredientInfo(ingredientInfo);
 
 		return ingredient;

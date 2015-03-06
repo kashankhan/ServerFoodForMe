@@ -51,7 +51,378 @@ public class BigOvenRecipeBAL  extends RecipeBAL {
 		return recipes;
 	}
 
-
+	private String test1() {
+		
+		String r = "{\n" + 
+				"  \"RecipeID\": 428021,\n" + 
+				"  \"Title\": \"Mushroom Soup\",\n" + 
+				"  \"Description\": \"One of my favorite warming dishes ? homemade mushroom soup.\\r\\rFresh, firm and plump mushrooms ? swiss brown, white button, shiitake, portobello or a mix of them all ? soaked in milk and cream, spiced with aromatic thyme and bay leaf, and a dash of freshly ground pepper and a pinch of Christmas nutmeg.\\r\\rYou?ll never look at another can of mushroom soup again.\",\n" + 
+				"  \"Cuisine\": null,\n" + 
+				"  \"Category\": \"Soups, Stews and Chili\",\n" + 
+				"  \"Subcategory\": \"Cream-style Soups\",\n" + 
+				"  \"PrimaryIngredient\": \"Mushroom\",\n" + 
+				"  \"StarRating\": 4.40740740740741,\n" + 
+				"  \"WebURL\": \"http://www.bigoven.com/recipe/mushroom-soup/428021\",\n" + 
+				"  \"ImageURL\": \"http://redirect.bigoven.com/pics/rs/640/mushroom-soup-5.jpg\",\n" + 
+				"  \"ReviewCount\": 27,\n" + 
+				"  \"MedalCount\": 0,\n" + 
+				"  \"FavoriteCount\": 2171,\n" + 
+				"  \"Poster\": {\n" + 
+				"    \"UserID\": 1721301,\n" + 
+				"    \"UserName\": \"darrinrich\",\n" + 
+				"    \"ImageURL48\": \"http://images.bigoven.com/image/upload/t_recipe-48,d_avatar-default.png/v1422068474/avatar/hwdnrvpumeatheya2mfj.jpg\",\n" + 
+				"    \"IsPremium\": false,\n" + 
+				"    \"IsKitchenHelper\": false,\n" + 
+				"    \"PremiumExpiryDate\": \"\\/Date(1382726113000)\\/\",\n" + 
+				"    \"MemberSince\": \"\\/Date(1349635740000)\\/\",\n" + 
+				"    \"IsUsingRecurly\": true\n" + 
+				"  },\n" + 
+				"  \"Ingredients\": [\n" + 
+				"    {\n" + 
+				"      \"IngredientID\": 4252573,\n" + 
+				"      \"DisplayIndex\": 0,\n" + 
+				"      \"IsHeading\": false,\n" + 
+				"      \"Name\": \"of fresh  mushrooms - cleaned and chopped finely\",\n" + 
+				"      \"HTMLName\": \"of fresh  \\u003ca href=\\\"http://www.bigoven.com/article/recipe/mushrooms\\\" class=\\\"glosslink\\\"\\u003emushrooms\\u003c/a\\u003e - cleaned and chopped finely\",\n" + 
+				"      \"Quantity\": 2,\n" + 
+				"      \"DisplayQuantity\": \"2\",\n" + 
+				"      \"Unit\": \"cups\",\n" + 
+				"      \"MetricQuantity\": 473,\n" + 
+				"      \"MetricDisplayQuantity\": \"473\",\n" + 
+				"      \"MetricUnit\": \"ml\",\n" + 
+				"      \"PreparationNotes\": null,\n" + 
+				"      \"IngredientInfo\": {\n" + 
+				"        \"Name\": \"of fresh  mushrooms - cleaned and chopped finely\",\n" + 
+				"        \"Department\": \"Produce\"\n" + 
+				"      },\n" + 
+				"      \"IsLinked\": false\n" + 
+				"    },\n" + 
+				"    {\n" + 
+				"      \"IngredientID\": 4252574,\n" + 
+				"      \"DisplayIndex\": 1,\n" + 
+				"      \"IsHeading\": false,\n" + 
+				"      \"Name\": \"olive oil\",\n" + 
+				"      \"HTMLName\": \"\\u003ca href=\\\"http://www.bigoven.com/article/recipe/olive-oil\\\" class=\\\"glosslink\\\"\\u003eolive oil\\u003c/a\\u003e\",\n" + 
+				"      \"Quantity\": 1,\n" + 
+				"      \"DisplayQuantity\": \"1\",\n" + 
+				"      \"Unit\": \"tbsp\",\n" + 
+				"      \"MetricQuantity\": 15,\n" + 
+				"      \"MetricDisplayQuantity\": \"15\",\n" + 
+				"      \"MetricUnit\": \"ml\",\n" + 
+				"      \"PreparationNotes\": null,\n" + 
+				"      \"IngredientInfo\": {\n" + 
+				"        \"Name\": \"olive oil\",\n" + 
+				"        \"Department\": \"Oils\"\n" + 
+				"      },\n" + 
+				"      \"IsLinked\": true\n" + 
+				"    },\n" + 
+				"    {\n" + 
+				"      \"IngredientID\": 4252575,\n" + 
+				"      \"DisplayIndex\": 2,\n" + 
+				"      \"IsHeading\": false,\n" + 
+				"      \"Name\": \"garlic - chopped\",\n" + 
+				"      \"HTMLName\": \"\\u003ca href=\\\"http://www.bigoven.com/article/recipe/garlic\\\" class=\\\"glosslink\\\"\\u003egarlic\\u003c/a\\u003e - chopped\",\n" + 
+				"      \"Quantity\": 3,\n" + 
+				"      \"DisplayQuantity\": \"3\",\n" + 
+				"      \"Unit\": \"cloves\",\n" + 
+				"      \"MetricQuantity\": 3,\n" + 
+				"      \"MetricDisplayQuantity\": \"3\",\n" + 
+				"      \"MetricUnit\": \"cloves\",\n" + 
+				"      \"PreparationNotes\": null,\n" + 
+				"      \"IngredientInfo\": {\n" + 
+				"        \"Name\": \"garlic - chopped\",\n" + 
+				"        \"Department\": \"Produce\"\n" + 
+				"      },\n" + 
+				"      \"IsLinked\": false\n" + 
+				"    },\n" + 
+				"    {\n" + 
+				"      \"IngredientID\": 4252576,\n" + 
+				"      \"DisplayIndex\": 3,\n" + 
+				"      \"IsHeading\": false,\n" + 
+				"      \"Name\": \"butter\",\n" + 
+				"      \"HTMLName\": \"\\u003ca href=\\\"http://www.bigoven.com/article/recipe/butter\\\" class=\\\"glosslink\\\"\\u003ebutter\\u003c/a\\u003e\",\n" + 
+				"      \"Quantity\": 1,\n" + 
+				"      \"DisplayQuantity\": \"1\",\n" + 
+				"      \"Unit\": \"tbsp\",\n" + 
+				"      \"MetricQuantity\": 15,\n" + 
+				"      \"MetricDisplayQuantity\": \"15\",\n" + 
+				"      \"MetricUnit\": \"ml\",\n" + 
+				"      \"PreparationNotes\": null,\n" + 
+				"      \"IngredientInfo\": {\n" + 
+				"        \"Name\": \"butter\",\n" + 
+				"        \"Department\": \"Dairy\"\n" + 
+				"      },\n" + 
+				"      \"IsLinked\": true\n" + 
+				"    },\n" + 
+				"    {\n" + 
+				"      \"IngredientID\": 4252577,\n" + 
+				"      \"DisplayIndex\": 4,\n" + 
+				"      \"IsHeading\": false,\n" + 
+				"      \"Name\": \"chopped fresh thyme or 1 teaspoon dried thyme\",\n" + 
+				"      \"HTMLName\": \"chopped fresh \\u003ca href=\\\"http://www.bigoven.com/article/recipe/thyme\\\" class=\\\"glosslink\\\"\\u003ethyme\\u003c/a\\u003e or 1 teaspoon dried thyme\",\n" + 
+				"      \"Quantity\": 1,\n" + 
+				"      \"DisplayQuantity\": \"1\",\n" + 
+				"      \"Unit\": \"tbsp\",\n" + 
+				"      \"MetricQuantity\": 15,\n" + 
+				"      \"MetricDisplayQuantity\": \"15\",\n" + 
+				"      \"MetricUnit\": \"ml\",\n" + 
+				"      \"PreparationNotes\": null,\n" + 
+				"      \"IngredientInfo\": {\n" + 
+				"        \"Name\": \"chopped fresh thyme or 1 teaspoon dried thyme\",\n" + 
+				"        \"Department\": \"Spices\"\n" + 
+				"      },\n" + 
+				"      \"IsLinked\": false\n" + 
+				"    },\n" + 
+				"    {\n" + 
+				"      \"IngredientID\": 4252578,\n" + 
+				"      \"DisplayIndex\": 5,\n" + 
+				"      \"IsHeading\": false,\n" + 
+				"      \"Name\": \"bay leaf\",\n" + 
+				"      \"HTMLName\": \"\\u003ca href=\\\"http://www.bigoven.com/article/recipe/bay-leaf\\\" class=\\\"glosslink\\\"\\u003ebay leaf\\u003c/a\\u003e\",\n" + 
+				"      \"Quantity\": 1,\n" + 
+				"      \"DisplayQuantity\": \"1 - 2\",\n" + 
+				"      \"Unit\": null,\n" + 
+				"      \"MetricQuantity\": 0,\n" + 
+				"      \"MetricDisplayQuantity\": \"1 - 2\",\n" + 
+				"      \"MetricUnit\": \"\",\n" + 
+				"      \"PreparationNotes\": null,\n" + 
+				"      \"IngredientInfo\": {\n" + 
+				"        \"Name\": \"bay leaf\",\n" + 
+				"        \"Department\": \"Produce\"\n" + 
+				"      },\n" + 
+				"      \"IsLinked\": false\n" + 
+				"    },\n" + 
+				"    {\n" + 
+				"      \"IngredientID\": 4252579,\n" + 
+				"      \"DisplayIndex\": 6,\n" + 
+				"      \"IsHeading\": false,\n" + 
+				"      \"Name\": \"Worcestershire sauce\",\n" + 
+				"      \"HTMLName\": \"\\u003ca href=\\\"http://www.bigoven.com/article/recipe/worcestershire-sauce\\\" class=\\\"glosslink\\\"\\u003eWorcestershire sauce\\u003c/a\\u003e\",\n" + 
+				"      \"Quantity\": 1,\n" + 
+				"      \"DisplayQuantity\": \"1\",\n" + 
+				"      \"Unit\": \"tsp\",\n" + 
+				"      \"MetricQuantity\": 4.92892158321706,\n" + 
+				"      \"MetricDisplayQuantity\": \"5\",\n" + 
+				"      \"MetricUnit\": \"ml\",\n" + 
+				"      \"PreparationNotes\": null,\n" + 
+				"      \"IngredientInfo\": {\n" + 
+				"        \"Name\": \"Worcestershire sauce\",\n" + 
+				"        \"Department\": \"Condiments\"\n" + 
+				"      },\n" + 
+				"      \"IsLinked\": true\n" + 
+				"    },\n" + 
+				"    {\n" + 
+				"      \"IngredientID\": 4252580,\n" + 
+				"      \"DisplayIndex\": 7,\n" + 
+				"      \"IsHeading\": false,\n" + 
+				"      \"Name\": \"chicken or vegetable stock\",\n" + 
+				"      \"HTMLName\": \"\\u003ca href=\\\"http://www.bigoven.com/article/recipe/chicken\\\" class=\\\"glosslink\\\"\\u003echicken\\u003c/a\\u003e or vegetable stock\",\n" + 
+				"      \"Quantity\": 1,\n" + 
+				"      \"DisplayQuantity\": \"1\",\n" + 
+				"      \"Unit\": \"cup\",\n" + 
+				"      \"MetricQuantity\": 237,\n" + 
+				"      \"MetricDisplayQuantity\": \"237\",\n" + 
+				"      \"MetricUnit\": \"ml\",\n" + 
+				"      \"PreparationNotes\": null,\n" + 
+				"      \"IngredientInfo\": {\n" + 
+				"        \"Name\": \"chicken or vegetable stock\",\n" + 
+				"        \"Department\": \"Canned Goods\"\n" + 
+				"      },\n" + 
+				"      \"IsLinked\": true\n" + 
+				"    },\n" + 
+				"    {\n" + 
+				"      \"IngredientID\": 4252581,\n" + 
+				"      \"DisplayIndex\": 8,\n" + 
+				"      \"IsHeading\": false,\n" + 
+				"      \"Name\": \"flour dissolved in 1 tbsp water \",\n" + 
+				"      \"HTMLName\": \"\\u003ca href=\\\"http://www.bigoven.com/article/recipe/flour\\\" class=\\\"glosslink\\\"\\u003eflour\\u003c/a\\u003e dissolved in 1 tbsp water \",\n" + 
+				"      \"Quantity\": 1,\n" + 
+				"      \"DisplayQuantity\": \"1\",\n" + 
+				"      \"Unit\": \"tbsp\",\n" + 
+				"      \"MetricQuantity\": 15,\n" + 
+				"      \"MetricDisplayQuantity\": \"15\",\n" + 
+				"      \"MetricUnit\": \"ml\",\n" + 
+				"      \"PreparationNotes\": null,\n" + 
+				"      \"IngredientInfo\": {\n" + 
+				"        \"Name\": \"flour dissolved in 1 tbsp water \",\n" + 
+				"        \"Department\": \"Beverages\"\n" + 
+				"      },\n" + 
+				"      \"IsLinked\": false\n" + 
+				"    },\n" + 
+				"    {\n" + 
+				"      \"IngredientID\": 7639823,\n" + 
+				"      \"DisplayIndex\": 9,\n" + 
+				"      \"IsHeading\": false,\n" + 
+				"      \"Name\": \"Salt to taste\",\n" + 
+				"      \"HTMLName\": \"\\u003ca href=\\\"http://www.bigoven.com/article/recipe/salt\\\" class=\\\"glosslink\\\"\\u003eSalt\\u003c/a\\u003e to taste\",\n" + 
+				"      \"Quantity\": 1,\n" + 
+				"      \"DisplayQuantity\": null,\n" + 
+				"      \"Unit\": null,\n" + 
+				"      \"MetricQuantity\": 0,\n" + 
+				"      \"MetricDisplayQuantity\": \"\",\n" + 
+				"      \"MetricUnit\": \"\",\n" + 
+				"      \"PreparationNotes\": null,\n" + 
+				"      \"IngredientInfo\": {\n" + 
+				"        \"Name\": \"Salt to taste\",\n" + 
+				"        \"Department\": \"Spices\"\n" + 
+				"      },\n" + 
+				"      \"IsLinked\": true\n" + 
+				"    },\n" + 
+				"    {\n" + 
+				"      \"IngredientID\": 4252582,\n" + 
+				"      \"DisplayIndex\": 10,\n" + 
+				"      \"IsHeading\": false,\n" + 
+				"      \"Name\": \"heavy cream\",\n" + 
+				"      \"HTMLName\": \"heavy \\u003ca href=\\\"http://www.bigoven.com/article/recipe/cream\\\" class=\\\"glosslink\\\"\\u003ecream\\u003c/a\\u003e\",\n" + 
+				"      \"Quantity\": 0.5,\n" + 
+				"      \"DisplayQuantity\": \"1/2\",\n" + 
+				"      \"Unit\": \"cup\",\n" + 
+				"      \"MetricQuantity\": 118,\n" + 
+				"      \"MetricDisplayQuantity\": \"118\",\n" + 
+				"      \"MetricUnit\": \"ml\",\n" + 
+				"      \"PreparationNotes\": null,\n" + 
+				"      \"IngredientInfo\": {\n" + 
+				"        \"Name\": \"heavy cream\",\n" + 
+				"        \"Department\": \"Dairy\"\n" + 
+				"      },\n" + 
+				"      \"IsLinked\": true\n" + 
+				"    },\n" + 
+				"    {\n" + 
+				"      \"IngredientID\": 4252583,\n" + 
+				"      \"DisplayIndex\": 11,\n" + 
+				"      \"IsHeading\": false,\n" + 
+				"      \"Name\": \"milk\",\n" + 
+				"      \"HTMLName\": \"\\u003ca href=\\\"http://www.bigoven.com/article/recipe/milk\\\" class=\\\"glosslink\\\"\\u003emilk\\u003c/a\\u003e\",\n" + 
+				"      \"Quantity\": 0.5,\n" + 
+				"      \"DisplayQuantity\": \"1/2\",\n" + 
+				"      \"Unit\": \"cup\",\n" + 
+				"      \"MetricQuantity\": 118,\n" + 
+				"      \"MetricDisplayQuantity\": \"118\",\n" + 
+				"      \"MetricUnit\": \"ml\",\n" + 
+				"      \"PreparationNotes\": null,\n" + 
+				"      \"IngredientInfo\": {\n" + 
+				"        \"Name\": \"milk\",\n" + 
+				"        \"Department\": \"Dairy\"\n" + 
+				"      },\n" + 
+				"      \"IsLinked\": true\n" + 
+				"    },\n" + 
+				"    {\n" + 
+				"      \"IngredientID\": 4252584,\n" + 
+				"      \"DisplayIndex\": 12,\n" + 
+				"      \"IsHeading\": false,\n" + 
+				"      \"Name\": \"Dash of nutmeg\",\n" + 
+				"      \"HTMLName\": \"Dash of \\u003ca href=\\\"http://www.bigoven.com/article/recipe/nutmeg\\\" class=\\\"glosslink\\\"\\u003enutmeg\\u003c/a\\u003e\",\n" + 
+				"      \"Quantity\": 1,\n" + 
+				"      \"DisplayQuantity\": null,\n" + 
+				"      \"Unit\": null,\n" + 
+				"      \"MetricQuantity\": 0,\n" + 
+				"      \"MetricDisplayQuantity\": \"\",\n" + 
+				"      \"MetricUnit\": \"\",\n" + 
+				"      \"PreparationNotes\": null,\n" + 
+				"      \"IngredientInfo\": {\n" + 
+				"        \"Name\": \"Dash of nutmeg\",\n" + 
+				"        \"Department\": \"Spices\"\n" + 
+				"      },\n" + 
+				"      \"IsLinked\": false\n" + 
+				"    },\n" + 
+				"    {\n" + 
+				"      \"IngredientID\": 4252585,\n" + 
+				"      \"DisplayIndex\": 13,\n" + 
+				"      \"IsHeading\": false,\n" + 
+				"      \"Name\": \"Freshly ground black pepper to taste\",\n" + 
+				"      \"HTMLName\": \"Freshly ground \\u003ca href=\\\"http://www.bigoven.com/article/recipe/black-pepper\\\" class=\\\"glosslink\\\"\\u003eblack pepper\\u003c/a\\u003e to taste\",\n" + 
+				"      \"Quantity\": 1,\n" + 
+				"      \"DisplayQuantity\": null,\n" + 
+				"      \"Unit\": null,\n" + 
+				"      \"MetricQuantity\": 0,\n" + 
+				"      \"MetricDisplayQuantity\": \"\",\n" + 
+				"      \"MetricUnit\": \"\",\n" + 
+				"      \"PreparationNotes\": null,\n" + 
+				"      \"IngredientInfo\": {\n" + 
+				"        \"Name\": \"Freshly ground black pepper to taste\",\n" + 
+				"        \"Department\": \"Spices\"\n" + 
+				"      },\n" + 
+				"      \"IsLinked\": true\n" + 
+				"    },\n" + 
+				"    {\n" + 
+				"      \"IngredientID\": 4252586,\n" + 
+				"      \"DisplayIndex\": 14,\n" + 
+				"      \"IsHeading\": false,\n" + 
+				"      \"Name\": \"Fresh parsley or thyme for garnish\",\n" + 
+				"      \"HTMLName\": \"Fresh \\u003ca href=\\\"http://www.bigoven.com/article/recipe/parsley\\\" class=\\\"glosslink\\\"\\u003eparsley\\u003c/a\\u003e or thyme for garnish\",\n" + 
+				"      \"Quantity\": 1,\n" + 
+				"      \"DisplayQuantity\": null,\n" + 
+				"      \"Unit\": null,\n" + 
+				"      \"MetricQuantity\": 0,\n" + 
+				"      \"MetricDisplayQuantity\": \"\",\n" + 
+				"      \"MetricUnit\": \"\",\n" + 
+				"      \"PreparationNotes\": null,\n" + 
+				"      \"IngredientInfo\": {\n" + 
+				"        \"Name\": \"Fresh parsley or thyme for garnish\",\n" + 
+				"        \"Department\": \"Produce\"\n" + 
+				"      },\n" + 
+				"      \"IsLinked\": false\n" + 
+				"    }\n" + 
+				"  ],\n" + 
+				"  \"Instructions\": \"1. Heat olive oil in a sauce pan. Add butter and lightly saut? garlic on medium heat.\\r\\n2. Add in mushrooms, thyme, bay leaf and Worcestershire sauce. Cook over medium heat for 5 minutes, or until the moisture from the mushrooms disappears.\\r\\n3. Add in chicken broth. Stir occasionally until broth boils, then reduce heat and simmer for 10 minutes.\\r\\n4. Add diluted flour in, and stir constantly (while simmering) until the mixture thickens. Season with salt and nutmeg. Taste and adjust seasoning.\\r\\n5. Finally, add milk and heavy cream, and bring to a simmer. Turn heat off.\\r\\n6. Serve hot in your soup bowl. Add freshly ground black pepper. Garnish with fresh parsley or thyme if you have them on hand. And warm up this holiday season!\\r\\n\",\n" + 
+				"  \"YieldNumber\": 2,\n" + 
+				"  \"YieldUnit\": \"Servings\",\n" + 
+				"  \"TotalMinutes\": 0,\n" + 
+				"  \"ActiveMinutes\": 0,\n" + 
+				"  \"NutritionInfo\": {\n" + 
+				"    \"SingularYieldUnit\": \"Paid API plan required for nutrition.\",\n" + 
+				"    \"TotalCalories\": 0,\n" + 
+				"    \"TotalFat\": 0,\n" + 
+				"    \"CaloriesFromFat\": 0,\n" + 
+				"    \"TotalFatPct\": 0,\n" + 
+				"    \"SatFat\": 0,\n" + 
+				"    \"SatFatPct\": 0,\n" + 
+				"    \"MonoFat\": 0,\n" + 
+				"    \"PolyFat\": 0,\n" + 
+				"    \"TransFat\": 0,\n" + 
+				"    \"Cholesterol\": 0,\n" + 
+				"    \"CholesterolPct\": 0,\n" + 
+				"    \"Sodium\": 0,\n" + 
+				"    \"SodiumPct\": 0,\n" + 
+				"    \"Potassium\": 0,\n" + 
+				"    \"PotassiumPct\": 0,\n" + 
+				"    \"TotalCarbs\": 0,\n" + 
+				"    \"TotalCarbsPct\": 0,\n" + 
+				"    \"DietaryFiber\": 0,\n" + 
+				"    \"DietaryFiberPct\": 0,\n" + 
+				"    \"Sugar\": 0,\n" + 
+				"    \"Protein\": 0,\n" + 
+				"    \"ProteinPct\": 0\n" + 
+				"  },\n" + 
+				"  \"IsPrivate\": null,\n" + 
+				"  \"CreationDate\": \"\\/Date(1358585136000)\\/\",\n" + 
+				"  \"LastModified\": \"\\/Date(1416949173123)\\/\",\n" + 
+				"  \"IsBookmark\": false,\n" + 
+				"  \"BookmarkURL\": \"http://blog.seasonwithspice.com/2011/12/cream-of-mushroom-soup-recipe.html\",\n" + 
+				"  \"BookmarkSiteLogo\": \"\",\n" + 
+				"  \"BookmarkImageURL\": null,\n" + 
+				"  \"IsRecipeScan\": null,\n" + 
+				"  \"MenuCount\": 8,\n" + 
+				"  \"NotesCount\": 5,\n" + 
+				"  \"AdTags\": \"simplypotatoes15\",\n" + 
+				"  \"IngredientsTextBlock\": null,\n" + 
+				"  \"AllCategoriesText\": \"collxhdin|collxtgsp|hanukkah|thanksgivukkah|collxtgh|collxrom\",\n" + 
+				"  \"IsSponsored\": false,\n" + 
+				"  \"VariantOfRecipeID\": null,\n" + 
+				"  \"Collection\": \"\",\n" + 
+				"  \"AdminBoost\": 100,\n" + 
+				"  \"VerifiedDateTime\": null,\n" + 
+				"  \"MaxImageSquare\": null,\n" + 
+				"  \"ImageSquares\": [\n" + 
+				"    \n" + 
+				"  ],\n" + 
+				"  \"HeroPhotoUrl\": \"http://images.bigoven.com/image/upload/mushroom-soup-5.jpg\",\n" + 
+				"  \"VerifiedByClass\": null\n" + 
+				"}";
+		
+	return r;
+		
+	}
 
 	private String getRecipe() {
 

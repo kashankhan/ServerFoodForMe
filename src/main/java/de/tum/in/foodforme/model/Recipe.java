@@ -35,13 +35,14 @@ public class Recipe extends AbstractEntity {
 	private @Getter @Setter String imageUrl;
 	private @Getter @Setter String largeImageUrl;
 	private @Getter @Setter Integer activeMinutes;
-	private @Getter @Setter String description;
 	private @Getter @Setter String primaryIngredient;
 	private @Getter @Setter Integer totalMinutes;
 	private @Getter @Setter Integer yieldNumber;
 	private @Getter @Setter String  yieldUnit;
 	@Column(columnDefinition="text")
 	private @Getter @Setter String instructions;
+	@Column(columnDefinition="text")
+	private @Getter @Setter String description;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private @Getter @Setter NutritionInfo nutritionInfo;
