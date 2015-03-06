@@ -41,31 +41,32 @@ public class BigOvenRecipeDTO extends RecipeDTO {
 		try {
 			JsonObject recipeInfo = this.getJsonObject(requestBody);
 			Recipe recipe = parseRecipe(recipeInfo);
-			recipe.setActiveMinutes(getJsonObjectAsInt(recipeInfo, "ActiveMinutes"));
-			recipe.setDescription(getJsonObjectAsString(recipeInfo, "Description"));
-			recipe.setPrimaryIngredient(getJsonObjectAsString(recipeInfo, "PrimaryIngredient")); 
-			recipe.setTotalMinutes(getJsonObjectAsInt(recipeInfo, "TotalMinutes"));  
-			recipe.setYieldNumber(getJsonObjectAsInt(recipeInfo, "YieldNumber"));
-			recipe.setYieldUnit(getJsonObjectAsString(recipeInfo, "YieldUnit"));
-			recipe.setInstructions(getJsonObjectAsString(recipeInfo, "Instructions"));
+			if (recipe != null) {
+				recipe.setActiveMinutes(getJsonObjectAsInt(recipeInfo, "ActiveMinutes"));
+				recipe.setDescription(getJsonObjectAsString(recipeInfo, "Description"));
+				recipe.setPrimaryIngredient(getJsonObjectAsString(recipeInfo, "PrimaryIngredient")); 
+				recipe.setTotalMinutes(getJsonObjectAsInt(recipeInfo, "TotalMinutes"));  
+				recipe.setYieldNumber(getJsonObjectAsInt(recipeInfo, "YieldNumber"));
+				recipe.setYieldUnit(getJsonObjectAsString(recipeInfo, "YieldUnit"));
+				recipe.setInstructions(getJsonObjectAsString(recipeInfo, "Instructions"));
 
-			//Nutrition
-			JsonObject nutritionResponseInfo = recipeInfo.getAsJsonObject("NutritionInfo");
-			NutritionInfo nutritionInfo = parseNutritionInfo(nutritionResponseInfo);
-			recipe.setNutritionInfo(nutritionInfo);
+				//Nutrition
+				JsonObject nutritionResponseInfo = recipeInfo.getAsJsonObject("NutritionInfo");
+				NutritionInfo nutritionInfo = parseNutritionInfo(nutritionResponseInfo);
+				recipe.setNutritionInfo(nutritionInfo);
 
-			//Ingredient
-			List<Ingredient> ingredients = new ArrayList<Ingredient>();
-			JsonArray results =  recipeInfo.getAsJsonArray("Ingredients");
-			for(int i = 0; i < results.size(); i++){ 
-				JsonObject ingredientInfo = results.get(i).getAsJsonObject(); 
-				Ingredient ingredient = parseIngredient(ingredientInfo);
-				ingredients.add(ingredient);
-			} 
-			recipe.setIngredients(ingredients);
+				//Ingredient
+				List<Ingredient> ingredients = new ArrayList<Ingredient>();
+				JsonArray results =  recipeInfo.getAsJsonArray("Ingredients");
+				for(int i = 0; i < results.size(); i++){ 
+					JsonObject ingredientInfo = results.get(i).getAsJsonObject(); 
+					Ingredient ingredient = parseIngredient(ingredientInfo);
+					ingredients.add(ingredient);
+				} 
+				recipe.setIngredients(ingredients);
 
-			recipeDAO.save(recipe);
-
+				recipeDAO.save(recipe);
+			}
 			return recipe;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -74,21 +75,24 @@ public class BigOvenRecipeDTO extends RecipeDTO {
 	}
 
 	private Recipe parseRecipe(JsonObject recipeInfo) {
+		Recipe recipe = null;
 		int recipeId = recipeInfo.get("RecipeID").getAsInt();
-		Recipe recipe = recipeDAO.getRecipe(recipeId);
-		if(recipe == null) {
-			recipe = new Recipe();
+		if (recipeId > 0) {
+			recipe = recipeDAO.getRecipe(recipeId);
+			if(recipe == null) {
+				recipe = new Recipe();
+			}
+			recipe.setRecipeId(recipeId);
+			recipe.setTitle(getJsonObjectAsString(recipeInfo, "Title"));
+			recipe.setStarRating(getJsonObjectAsInt(recipeInfo, "StarRating"));
+			recipe.setCategory(getJsonObjectAsString(recipeInfo, "Category"));
+			recipe.setSubcategory(getJsonObjectAsString(recipeInfo, "Subcategory"));
+			recipe.setCuisine(getJsonObjectAsString(recipeInfo, "Cuisine"));
+			recipe.setIsBookmark(getJsonObjectAsBoolean(recipeInfo, "IsBookmark"));
+			recipe.setReviewCount(getJsonObjectAsInt(recipeInfo, "ReviewCount"));
+			recipe.setImageUrl(getJsonObjectAsString(recipeInfo, "ImageURL"));
+			recipe.setLargeImageUrl(getJsonObjectAsString(recipeInfo, "HeroPhotoUrl"));
 		}
-		recipe.setRecipeId(recipeId);
-		recipe.setTitle(getJsonObjectAsString(recipeInfo, "Title"));
-		recipe.setStarRating(getJsonObjectAsInt(recipeInfo, "StarRating"));
-		recipe.setCategory(getJsonObjectAsString(recipeInfo, "Category"));
-		recipe.setSubcategory(getJsonObjectAsString(recipeInfo, "Subcategory"));
-		recipe.setCuisine(getJsonObjectAsString(recipeInfo, "Cuisine"));
-		recipe.setIsBookmark(getJsonObjectAsBoolean(recipeInfo, "IsBookmark"));
-		recipe.setReviewCount(getJsonObjectAsInt(recipeInfo, "ReviewCount"));
-		recipe.setImageUrl(getJsonObjectAsString(recipeInfo, "ImageURL"));
-		recipe.setLargeImageUrl(getJsonObjectAsString(recipeInfo, "HeroPhotoUrl"));
 		return recipe;
 	}
 
