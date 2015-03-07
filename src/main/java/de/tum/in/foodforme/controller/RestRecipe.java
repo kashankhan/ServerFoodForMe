@@ -23,7 +23,8 @@ public class RestRecipe {
 
 	private final RecipeDAO recipeDAO = DAOManager.createRecipeDAO();
 	private final RecipeBAL recipeBAL = RecipeBALManger.createRecipeBAL(RecipeBalType.BIG_OVEN);
-
+	private static int syncRecipesRequestCounter = 0;
+	
 	@RequestMapping(value="/recipedetail")
 	@ResponseBody
 	public Recipe recipedetail(@RequestParam("recipeId") Integer recipeId){
@@ -61,6 +62,8 @@ public class RestRecipe {
 				if(syncRecipe != null) {
 					sycnRecipes.add(syncRecipe);
 				}
+				syncRecipesRequestCounter ++;
+				System.out.println("syncRecipesRequestCounter :" + syncRecipesRequestCounter);
 			}
 		}
 		return sycnRecipes;
