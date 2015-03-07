@@ -18,4 +18,8 @@ public class DAOManager {
 	public static UserFavoriteRecipeDAO createUserFavoriteRecipeDAO(){
 		return new UserFavoriteRecipeDAO(factory.createEntityManager());
 	}
+	
+	public static RecipeRecommendationDAO createRecipeRecommendationDAO(){
+		return new RecipeRecommendationDAO();
+	}
 }

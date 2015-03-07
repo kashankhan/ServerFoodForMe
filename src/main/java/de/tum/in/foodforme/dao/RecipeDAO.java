@@ -25,9 +25,9 @@ public class RecipeDAO extends GenericDAO<Recipe>{
 	}
 	
 	public Recipe getRecipe(int recipeId){
-		TypedQuery<Recipe> q = em.createQuery("select r from Recipe r where r.recipeId=:recipeId", Recipe.class);
-		q.setParameter("recipeId", recipeId);
 		try {
+			TypedQuery<Recipe> q = em.createQuery("select r from Recipe r where r.recipeId=:recipeId", Recipe.class);
+			q.setParameter("recipeId", recipeId);
 			return q.getSingleResult();
 		}
 		catch(NoResultException e) {
@@ -36,13 +36,13 @@ public class RecipeDAO extends GenericDAO<Recipe>{
 	}
 
 	public List<Recipe> getRecipes(String keyword){
-		keyword = "%" + keyword.toLowerCase() + "%";
-		TypedQuery<Recipe> q = em.createQuery("select r from Recipe r where LOWER(r.title) LIKE :keyword"
-				+ " OR LOWER(r.category) LIKE :keyword"
-				+ " OR LOWER(r.subcategory) LIKE :keyword",
-				Recipe.class);
-		q.setParameter("keyword", keyword);
 		try {
+			keyword = "%" + keyword.toLowerCase() + "%";
+			TypedQuery<Recipe> q = em.createQuery("select r from Recipe r where LOWER(r.title) LIKE :keyword"
+					+ " OR LOWER(r.category) LIKE :keyword"
+					+ " OR LOWER(r.subcategory) LIKE :keyword",
+					Recipe.class);
+			q.setParameter("keyword", keyword);
 			return q.getResultList();
 		}
 		catch(NoResultException e) {
@@ -78,6 +78,18 @@ public class RecipeDAO extends GenericDAO<Recipe>{
 		}
 	}
 	
+	public List<Recipe> getPopularUniqueRecipes(){
+		try {
+			TypedQuery<Recipe> q = em.createQuery("select distinct r from Recipe r where r.starRating > 3",
+					Recipe.class);
+			q.setMaxResults(10);
+			return q.getResultList();
+		}
+		catch(NoResultException e) {
+			return null;
+		}
+	}
+	
 	public List<Recipe> getUnSyncRecipes(){
 		try {
 			TypedQuery<Recipe> q = em.createQuery("select r from Recipe r where r.instructions IS NULL", Recipe.class);
@@ -87,5 +99,4 @@ public class RecipeDAO extends GenericDAO<Recipe>{
 			return null;
 		}
 	}
-
 }
