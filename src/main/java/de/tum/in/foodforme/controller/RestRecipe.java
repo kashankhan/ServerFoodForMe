@@ -64,7 +64,6 @@ public class RestRecipe {
 			}
 		}
 		return sycnRecipes;
-
 	}
 
 }

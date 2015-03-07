@@ -139,12 +139,13 @@ public class BigOvenRecipeDTO extends RecipeDTO {
 		ingredient.setDisplayQuantity(getJsonObjectAsString(responseInfo, "DisplayQuantity"));
 
 		//IngredientInfo
-		JsonObject responseIngredientInfo = responseInfo.getAsJsonObject("IngredientInfo");
-		IngredientInfo ingredientInfo = new IngredientInfo();
-		ingredientInfo.setDepartment(getJsonObjectAsString(responseIngredientInfo, "Department"));
-		ingredientInfo.setName(getJsonObjectAsString(responseIngredientInfo, "Name")); 
-		ingredient.setIngredientInfo(ingredientInfo);
-
+		if (hasJsonObject(responseInfo, "IngredientInfo")) {
+			JsonObject responseIngredientInfo = responseInfo.getAsJsonObject("IngredientInfo");
+			IngredientInfo ingredientInfo = new IngredientInfo();
+			ingredientInfo.setDepartment(getJsonObjectAsString(responseIngredientInfo, "Department"));
+			ingredientInfo.setName(getJsonObjectAsString(responseIngredientInfo, "Name")); 
+			ingredient.setIngredientInfo(ingredientInfo);
+		}
 		return ingredient;
 	}
 
