@@ -9,6 +9,7 @@
 		<class>de.tum.in.foodforme.model.Recipe</class>
 		<class>de.tum.in.foodforme.model.UserProfile</class>
 		<class>de.tum.in.foodforme.model.IngredientInfo</class>
+		<class>de.tum.in.foodforme.model.UserFavoriteRecipe</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/foodforme" />

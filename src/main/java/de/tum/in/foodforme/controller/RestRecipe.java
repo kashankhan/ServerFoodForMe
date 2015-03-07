@@ -15,13 +15,16 @@ import de.tum.in.foodforme.bal.RecipeBALManger;
 import de.tum.in.foodforme.constants.GlobalConstants.RecipeBalType;
 import de.tum.in.foodforme.dao.DAOManager;
 import de.tum.in.foodforme.dao.RecipeDAO;
+import de.tum.in.foodforme.dao.UserFavoriteRecipeDAO;
 import de.tum.in.foodforme.model.Recipe;
+import de.tum.in.foodforme.model.UserFavoriteRecipe;
 
 @Controller
 @RequestMapping("/rest/recipe")
 public class RestRecipe {
 
 	private final RecipeDAO recipeDAO = DAOManager.createRecipeDAO();
+	private final UserFavoriteRecipeDAO userFavoriteRecipeDAO = DAOManager.createUserFavoriteRecipeDAO();
 	private final RecipeBAL recipeBAL = RecipeBALManger.createRecipeBAL(RecipeBalType.BIG_OVEN);
 	private static int syncRecipesRequestCounter = 0;
 	
@@ -34,8 +37,7 @@ public class RestRecipe {
 		}
 		return recipe;
 	}
-
-
+	
 	@RequestMapping(value="/searchrecipes")
 	@ResponseBody
 	public List<Recipe> searchRecipes(@RequestParam("keyword") String keyword, 
@@ -46,9 +48,15 @@ public class RestRecipe {
 			recipes = recipeBAL.searchRecipes(keyword, page, resultPerPage);
 		}
 		return recipes;
-
 	}
-
+	
+	@RequestMapping(value="/markfavorite")
+	@ResponseBody
+	public UserFavoriteRecipe markfavorite(@RequestParam("recipeid") Integer recipeId,
+			@RequestParam(value="favorite", required=true) boolean favorite,
+			@RequestParam(value="userid", required=true) String userId){
+		return userFavoriteRecipeDAO.markAsFavorite(userId, recipeId, favorite);
+	}
 
 	@RequestMapping(value = "/sysnrecipes", method = RequestMethod.GET)
 	@ResponseBody

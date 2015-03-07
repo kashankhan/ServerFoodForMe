@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+
 import de.tum.in.foodforme.model.Recipe;
 
 public class RecipeDAO extends GenericDAO<Recipe>{
@@ -64,13 +65,27 @@ public class RecipeDAO extends GenericDAO<Recipe>{
 		}
 	}
 	
-	public List<Recipe> getUnSyncRecipes(){
+	public List<Recipe> favoriteIngredentRecipes(String keyword){
 		try {
-			TypedQuery<Recipe> q = em.createQuery("select r from Recipe r where r.instructions IS NULL", Recipe.class);
-			q.setMaxResults(10);
+			keyword = "%" + keyword.toLowerCase() + "%";
+			TypedQuery<Recipe> q = em.createQuery("select r from Recipe r where"
+					+ "r.ingredients.name = ANY (SELECT i from Ingredient where LOWER(i.name) LIKE :keyword)",
+					Recipe.class);
+			q.setParameter("keyword", keyword);
 			return q.getResultList();
 		} catch (NoResultException e) {
 			return null;
 		}
 	}
+	
+	public List<Recipe> getUnSyncRecipes(){
+		try {
+			TypedQuery<Recipe> q = em.createQuery("select r from Recipe r where r.instructions IS NULL", Recipe.class);
+			q.setMaxResults(25);
+			return q.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+
 }

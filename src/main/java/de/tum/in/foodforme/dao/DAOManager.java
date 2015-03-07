@@ -14,4 +14,8 @@ public class DAOManager {
 	public static UserProfileDAO createUserProfileDAO(){
 		return new UserProfileDAO(factory.createEntityManager());
 	}
+	
+	public static UserFavoriteRecipeDAO createUserFavoriteRecipeDAO(){
+		return new UserFavoriteRecipeDAO(factory.createEntityManager());
+	}
 }

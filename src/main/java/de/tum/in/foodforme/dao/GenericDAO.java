@@ -21,6 +21,12 @@ public abstract class GenericDAO<T extends AbstractEntity> {
 			t = em.merge(t);
 		em.getTransaction().commit();
 	}
+	
+	public void delete(T t){
+		em.getTransaction().begin();
+		em.remove(t);
+		em.getTransaction().commit();
+	}
 
 	public abstract List<T> findAll();
 }
