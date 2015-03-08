@@ -35,15 +35,21 @@ public class RecipeRecommendation extends BaseRecommendation {
 	}
 
 	private List<UserFavoriteRecipe>getRecomnendedUserFavoriteRecipes(List<UserFavoriteRecipe>userFavoriteRecipes, List<UserFavoriteRecipe>similarTasteUsers) {
-		List<UserFavoriteRecipe> list = new ArrayList<UserFavoriteRecipe>();
-		return list;
+		List<UserFavoriteRecipe> recipes = new ArrayList<UserFavoriteRecipe>();
+		for(Iterator<UserFavoriteRecipe> u = similarTasteUsers.iterator(); u.hasNext(); ) {
+			UserFavoriteRecipe userFavoriteRecipe = u.next();
+			recipes.add(userFavoriteRecipe);
+		}
+		return recipes;
 	}
 
 	List<Integer> getRecommendedRecipe(List<UserFavoriteRecipe>recommendedfavorites) {
 		List<Integer> recipes = new ArrayList<Integer>();
 		for(Iterator<UserFavoriteRecipe> u = recommendedfavorites.iterator(); u.hasNext(); ) {
 			UserFavoriteRecipe userFavoriteRecipe = u.next();
-			recipes.add(userFavoriteRecipe.getRecipeId());
+			if(!recipes.contains(userFavoriteRecipe.getRecipeId())) {
+				recipes.add(userFavoriteRecipe.getRecipeId());
+			}
 		}
 		return recipes;
 	}

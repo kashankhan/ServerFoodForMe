@@ -22,6 +22,7 @@ public class RecipeRecommendationDAO {
 	private List<Recipe> getUserRecommendation(String userId) {
 		List<Recipe> recipes = null;
 		List<UserFavoriteRecipe> favoriteList = getUserFavoriteRecipes(userId);
+		Integer threshold = 10;
 		//Check if the user favorite recipe list is empty recommend popular recipes. 
 		if(favoriteList.isEmpty()) {
 			recipes = getPopularRecipes();
@@ -30,9 +31,9 @@ public class RecipeRecommendationDAO {
 			List<UserFavoriteRecipe> userFavoriteRecipes = getUserFavoriteRecipes(userId);
 			List<UserFavoriteRecipe> otherUserFavoriteRecipes = getAllUserFavoriteRecipesExpcept(userId);
 			List<Integer>recipesId = reicpesRecommendationGenerator.generateRecommendations(userId, userFavoriteRecipes, otherUserFavoriteRecipes);
-			recipes = getRecipes(recipesId);
-			if(recipes.isEmpty()) {
-				recipes = getPopularRecipes();
+			recipes = getRecipes(recipesId, threshold);
+			if(recipes.isEmpty() && recipes.size() < threshold) {
+				recipes.addAll(getPopularRecipes());
 			}
 		}
 		
@@ -50,14 +51,18 @@ public class RecipeRecommendationDAO {
 		return favoriteRecipeDAO.findAllExceptUser(userId);
 	}
 	
-	private List<Recipe>getRecipes(List<Integer>recipesId) {
+	private List<Recipe>getRecipes(List<Integer>recipesId, Integer threshold) {
+		int count = 0;
 		List<Recipe> recipes = new ArrayList<Recipe>();
 		for(Iterator<Integer> r = recipesId.iterator(); r.hasNext(); ) {
 			Integer recipeId = r.next();
 			Recipe recipe = recipeDAO.getRecipe(recipeId);
 			if(recipe != null) {
 				recipes.add(recipe);
+				count++;
 			}
+			if (count == threshold) 
+				break;
 		}
 		return recipes;
 	}
