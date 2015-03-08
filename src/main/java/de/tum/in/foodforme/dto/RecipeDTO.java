@@ -5,7 +5,7 @@ import de.tum.in.foodforme.dao.DAOManager;
 import de.tum.in.foodforme.dao.RecipeDAO;
 import de.tum.in.foodforme.model.Recipe;
 
-public abstract class  RecipeDTO extends GenericDTO {
+public abstract class  RecipeDTO extends BaseDTO {
 
 	protected final RecipeDAO recipeDAO = DAOManager.createRecipeDAO();
 	

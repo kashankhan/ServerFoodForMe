@@ -7,9 +7,12 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import de.tum.in.foodforme.model.Recipe;
+import de.tum.in.foodforme.model.UserFavoriteRecipe;
 
 public class RecipeDAO extends GenericDAO<Recipe>{
 
+	private final UserFavoriteRecipeDAO userFavoriteRecipeDAO = DAOManager.createUserFavoriteRecipeDAO();
+	
 	public RecipeDAO(EntityManager em) {
 		super(em);
 	}
@@ -80,10 +83,24 @@ public class RecipeDAO extends GenericDAO<Recipe>{
 	
 	public List<Recipe> getPopularUniqueRecipes(){
 		try {
-			TypedQuery<Recipe> q = em.createQuery("select distinct r from Recipe r where r.starRating > 3",
+			// TODO, First fetch  primary ingredient and based on that create query 
+			TypedQuery<Recipe> q = em.createQuery("select r from Recipe r where r.starRating > 3",
 					Recipe.class);
 			q.setMaxResults(10);
 			return q.getResultList();
+		}
+		catch(NoResultException e) {
+			return null;
+		}
+	}
+	
+	public UserFavoriteRecipe markAsFavorite(String userId, int recipeId, boolean favorite) {
+		try {
+			Recipe recipe = getRecipe(recipeId);
+			String ingredient = (recipe.getPrimaryIngredient() != null && recipe.getPrimaryIngredient().length() > 0) 
+					? recipe.getPrimaryIngredient() : recipe.getSubcategory(); 
+			UserFavoriteRecipe userFavoriteRecipe = userFavoriteRecipeDAO.markAsFavorite(userId, recipeId, ingredient, favorite);
+			return userFavoriteRecipe;
 		}
 		catch(NoResultException e) {
 			return null;

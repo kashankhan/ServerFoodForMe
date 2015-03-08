@@ -6,7 +6,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 
-public class GeneraicBAL {
+public class BaseBAL {
 
 	protected String sendGetRequest(String uri) {		
 		HttpHeaders headers = new HttpHeaders();

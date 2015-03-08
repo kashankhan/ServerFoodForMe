@@ -25,8 +25,29 @@ public class UserFavoriteRecipeDAO  extends GenericDAO<UserFavoriteRecipe>{
 			return null;
 		}
 	}
+	
+	public List<UserFavoriteRecipe> findAll(String userId) {
+		try {
+			TypedQuery<UserFavoriteRecipe> q = em.createQuery("select u from UserFavoriteRecipe u where u.userId=:userId", UserFavoriteRecipe.class);
+			q.setParameter("userId", userId);
+			return q.getResultList();
+		} catch (NoResultException e) {
+			// TODO Auto-generated catch block
+			return null;
+		}
+	}
 
-	public UserFavoriteRecipe markAsFavorite(String userId, int recipeId, boolean favorite) {
+	public List<UserFavoriteRecipe> findAllExceptUser(String userId) {
+		try {
+			TypedQuery<UserFavoriteRecipe> q = em.createQuery("select u from UserFavoriteRecipe u where u.userId!=:userId", UserFavoriteRecipe.class);
+			q.setParameter("userId", userId);
+			return q.getResultList();
+		} catch (NoResultException e) {
+			// TODO Auto-generated catch block
+			return null;
+		}
+	}
+	public UserFavoriteRecipe markAsFavorite(String userId, int recipeId, String ingredient, boolean favorite) {
 		UserFavoriteRecipe userFavoriteRecipe = null;
 		try {
 			TypedQuery<UserFavoriteRecipe> q = em.createQuery("select u from UserFavoriteRecipe u where u.recipeId=:recipeId AND u.userId=:userId", UserFavoriteRecipe.class);  
@@ -38,6 +59,7 @@ public class UserFavoriteRecipeDAO  extends GenericDAO<UserFavoriteRecipe>{
 				userFavoriteRecipe = new UserFavoriteRecipe();
 				userFavoriteRecipe.setRecipeId(recipeId);
 				userFavoriteRecipe.setUserId(userId);
+				userFavoriteRecipe.setIngredient(ingredient);
 				save(userFavoriteRecipe);
 			}
 			else if (userFavoriteRecipe != null && favorite == false) {

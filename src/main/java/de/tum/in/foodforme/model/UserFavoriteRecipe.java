@@ -19,5 +19,6 @@ public class UserFavoriteRecipe extends AbstractEntity{
 
 	private @Getter @Setter String userId;
 	private @Getter @Setter Integer recipeId;
+	private @Getter @Setter String ingredient;
 
 }

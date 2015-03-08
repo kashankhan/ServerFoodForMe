@@ -24,7 +24,6 @@ import de.tum.in.foodforme.model.UserFavoriteRecipe;
 public class RestRecipe {
 
 	private final RecipeDAO recipeDAO = DAOManager.createRecipeDAO();
-	private final UserFavoriteRecipeDAO userFavoriteRecipeDAO = DAOManager.createUserFavoriteRecipeDAO();
 	private final RecipeBAL recipeBAL = RecipeBALManger.createRecipeBAL(RecipeBalType.BIG_OVEN);
 	private static int syncRecipesRequestCounter = 0;
 	
@@ -55,7 +54,7 @@ public class RestRecipe {
 	public UserFavoriteRecipe markfavorite(@RequestParam("recipeid") Integer recipeId,
 			@RequestParam(value="favorite", required=true) boolean favorite,
 			@RequestParam(value="userid", required=true) String userId){
-		return userFavoriteRecipeDAO.markAsFavorite(userId, recipeId, favorite);
+		return recipeDAO.markAsFavorite(userId, recipeId, favorite);
 	}
 
 	@RequestMapping(value = "/sysnrecipes", method = RequestMethod.GET)

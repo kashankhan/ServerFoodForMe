@@ -3,7 +3,7 @@ package de.tum.in.foodforme.dto;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-public class GenericDTO {
+public class BaseDTO {
 
 	JsonObject getJsonObject(String response) {
 		JsonParser parser = new JsonParser();
