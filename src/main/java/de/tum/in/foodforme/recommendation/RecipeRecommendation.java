@@ -11,9 +11,9 @@ public class RecipeRecommendation extends BaseRecommendation {
 	List<Integer> getRecommendations(String userId, List<UserFavoriteRecipe>userFavoriteRecipes, List<UserFavoriteRecipe>otherUserFavoriteRecipes) {
 		List<Integer> recipes = new ArrayList<Integer>();
 		List<UserFavoriteRecipe>uniqueUserFavoriteRecipe = getUniqueUserFavoriteRecipe(userFavoriteRecipes);
-		List<UserFavoriteRecipe>similarTasteUsers = getSimilarTasteUsers(uniqueUserFavoriteRecipe, otherUserFavoriteRecipes);
+		List<String>similarTasteUsers = getSimilarTasteUsers(uniqueUserFavoriteRecipe, otherUserFavoriteRecipes);
 		if(similarTasteUsers != null && !similarTasteUsers.isEmpty()) {
-			List<UserFavoriteRecipe> recomnendedUserFavoriteRecipes = getRecomnendedUserFavoriteRecipes(userFavoriteRecipes, similarTasteUsers);
+			List<UserFavoriteRecipe> recomnendedUserFavoriteRecipes = getRecomnendedUserFavoriteRecipes(otherUserFavoriteRecipes, similarTasteUsers);
 			if(recomnendedUserFavoriteRecipes != null && !recomnendedUserFavoriteRecipes.isEmpty()) {
 				recipes = getRecommendedRecipe(recomnendedUserFavoriteRecipes);
 			}
@@ -21,24 +21,30 @@ public class RecipeRecommendation extends BaseRecommendation {
 		return recipes;	 
 	}		
 
-	private List<UserFavoriteRecipe>getSimilarTasteUsers(List<UserFavoriteRecipe>userFavoriteRecipes, List<UserFavoriteRecipe>otherUserFavoriteRecipes) {
-		List<UserFavoriteRecipe> recipes = new ArrayList<UserFavoriteRecipe>();
+	private List<String>getSimilarTasteUsers(List<UserFavoriteRecipe>userFavoriteRecipes, List<UserFavoriteRecipe>otherUserFavoriteRecipes) {
+		List<String> users = new ArrayList<String>();
 		for(Iterator<UserFavoriteRecipe> o = otherUserFavoriteRecipes.iterator(); o.hasNext(); ) {
 			UserFavoriteRecipe oRecipe = o.next();
-			for(Iterator<UserFavoriteRecipe> u = otherUserFavoriteRecipes.iterator(); u.hasNext(); ) {
+			for(Iterator<UserFavoriteRecipe> u = userFavoriteRecipes.iterator(); u.hasNext(); ) {
 				UserFavoriteRecipe userFavoriteRecipe = u.next();
-				if(userFavoriteRecipe.getIngredient().equalsIgnoreCase(oRecipe.getIngredient()))
-					recipes.add(oRecipe);
+				if(userFavoriteRecipe.getIngredient().equalsIgnoreCase(oRecipe.getIngredient()) && 
+						!users.contains(oRecipe.getUserId()))
+					users.add(oRecipe.getUserId());
 			}
 		}
-		return recipes;
+		return users;
 	}
 
-	private List<UserFavoriteRecipe>getRecomnendedUserFavoriteRecipes(List<UserFavoriteRecipe>userFavoriteRecipes, List<UserFavoriteRecipe>similarTasteUsers) {
+	private List<UserFavoriteRecipe>getRecomnendedUserFavoriteRecipes(List<UserFavoriteRecipe>otherUserFavoriteRecipes, List<String>similarTasteUsers) {
 		List<UserFavoriteRecipe> recipes = new ArrayList<UserFavoriteRecipe>();
-		for(Iterator<UserFavoriteRecipe> u = similarTasteUsers.iterator(); u.hasNext(); ) {
-			UserFavoriteRecipe userFavoriteRecipe = u.next();
-			recipes.add(userFavoriteRecipe);
+		for(Iterator<UserFavoriteRecipe> ufr = otherUserFavoriteRecipes.iterator(); ufr.hasNext(); ) {
+			UserFavoriteRecipe userFavoriteRecipe = ufr.next();
+			for(Iterator<String> u = similarTasteUsers.iterator(); u.hasNext(); ) {
+				String userId = u.next();
+				if(userId.equalsIgnoreCase(userFavoriteRecipe.getUserId()) && 
+						!recipes.contains(userFavoriteRecipe))
+					recipes.add(userFavoriteRecipe);
+			}
 		}
 		return recipes;
 	}
@@ -53,7 +59,7 @@ public class RecipeRecommendation extends BaseRecommendation {
 		}
 		return recipes;
 	}
-	
+
 	private List<UserFavoriteRecipe>getUniqueUserFavoriteRecipe(List<UserFavoriteRecipe>userFavoriteRecipes) {
 		List<String>ingredents = new ArrayList<String>();
 		List<UserFavoriteRecipe>list = new ArrayList<UserFavoriteRecipe>();
