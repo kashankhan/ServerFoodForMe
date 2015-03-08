@@ -32,7 +32,7 @@ public class RecipeRecommendationDAO {
 			List<UserFavoriteRecipe> otherUserFavoriteRecipes = getAllUserFavoriteRecipesExpcept(userId);
 			List<Integer>recipesId = reicpesRecommendationGenerator.generateRecommendations(userId, userFavoriteRecipes, otherUserFavoriteRecipes);
 			recipes = getRecipes(recipesId, threshold);
-			if(recipes.isEmpty() && recipes.size() < threshold) {
+			if(recipes.isEmpty() || recipes.size() < threshold) {
 				recipes.addAll(getPopularRecipes());
 			}
 		}
