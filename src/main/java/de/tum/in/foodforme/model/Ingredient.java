@@ -31,6 +31,7 @@ public class Ingredient extends AbstractEntity{
 	private @Getter @Setter Integer quantity;
 	private @Getter @Setter String unit;
 	private @Getter @Setter String displayQuantity;
+	private @Getter @Setter Integer recipeId;
 	@Column(columnDefinition="text")
 	private @Getter @Setter String preparationNotes;
 

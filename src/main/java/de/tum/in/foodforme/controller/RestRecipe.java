@@ -3,8 +3,13 @@ package de.tum.in.foodforme.controller;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,9 +20,7 @@ import de.tum.in.foodforme.bal.RecipeBALManger;
 import de.tum.in.foodforme.constants.GlobalConstants.RecipeBalType;
 import de.tum.in.foodforme.dao.DAOManager;
 import de.tum.in.foodforme.dao.RecipeDAO;
-import de.tum.in.foodforme.dao.UserFavoriteRecipeDAO;
 import de.tum.in.foodforme.model.Recipe;
-import de.tum.in.foodforme.model.UserFavoriteRecipe;
 
 @Controller
 @RequestMapping("/rest/recipe")
@@ -48,14 +51,6 @@ public class RestRecipe {
 		}
 		return recipes;
 	}
-	
-	@RequestMapping(value="/markfavorite")
-	@ResponseBody
-	public UserFavoriteRecipe markfavorite(@RequestParam("recipeid") Integer recipeId,
-			@RequestParam(value="favorite", required=true) boolean favorite,
-			@RequestParam(value="userid", required=true) String userId){
-		return recipeDAO.markAsFavorite(userId, recipeId, favorite);
-	}
 
 	@RequestMapping(value = "/sysnrecipes", method = RequestMethod.GET)
 	@ResponseBody
@@ -75,5 +70,20 @@ public class RestRecipe {
 		}
 		return sycnRecipes;
 	}
-
+	
+	
+	@RequestMapping(value = "/raterecipe", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> rateRecipe(@RequestBody Map<String, Object> userPreference,  
+			HttpServletRequest request, HttpServletResponse response) { 
+		Integer recipeId = (Integer) userPreference.get("recipeId");
+		Integer starRating = (Integer) userPreference.get("starRating");
+		String userId = (String) userPreference.get("userId");
+		Integer perferTiming = (Integer) userPreference.get("perferTiming");
+		List<String> likeIngredients = (List<String>) userPreference.get("likeIngredients");
+		List<String> dislikeIngredients = (List<String>) userPreference.get("dislikeIngredients");
+		recipeDAO.rateRecipe(recipeId, userId, starRating, likeIngredients, dislikeIngredients, perferTiming);	
+		
+		return userPreference;
+	}
+	
 }

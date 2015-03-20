@@ -5,51 +5,50 @@ import java.util.Iterator;
 import java.util.List;
 
 import de.tum.in.foodforme.model.Recipe;
-import de.tum.in.foodforme.model.UserFavoriteRecipe;
+import de.tum.in.foodforme.model.UserRecipePreference;
 import de.tum.in.foodforme.recommendation.ReicpesRecommendationGenerator;
 
 public class RecipeRecommendationDAO {
 
 	final RecipeDAO recipeDAO = DAOManager.createRecipeDAO();
-	final UserFavoriteRecipeDAO favoriteRecipeDAO = DAOManager.createUserFavoriteRecipeDAO();
+	final UserRecipePreferenceDAO favoriteRecipeDAO = DAOManager.createUserRecipePreferenceDAO();
 	final UserProfileDAO userProfileDAO = DAOManager.createUserProfileDAO();
 	final ReicpesRecommendationGenerator reicpesRecommendationGenerator = new ReicpesRecommendationGenerator();
 	
 	public List<Recipe> getUserRecipeRecommendation(String userId) {
 		return getUserRecommendation(userId);
 	}
-	
+
 	private List<Recipe> getUserRecommendation(String userId) {
 		List<Recipe> recipes = null;
-		List<UserFavoriteRecipe> favoriteList = getUserFavoriteRecipes(userId);
+		List<UserRecipePreference> favoriteList = getUserFavoriteRecipes(userId);
 		Integer threshold = 10;
 		//Check if the user favorite recipe list is empty recommend popular recipes. 
 		if(favoriteList.isEmpty()) {
-			recipes = getPopularRecipes();
+			recipes = getPopularRecipes(threshold);
 		}
 		else {	
-			List<UserFavoriteRecipe> userFavoriteRecipes = getUserFavoriteRecipes(userId);
-			List<UserFavoriteRecipe> otherUserFavoriteRecipes = getAllUserFavoriteRecipesExpcept(userId);
-			List<Integer>recipesId = reicpesRecommendationGenerator.generateRecommendations(userId, userFavoriteRecipes, otherUserFavoriteRecipes);
-			recipes = getRecipes(recipesId, threshold);
-			if(recipes.isEmpty() || recipes.size() < threshold) {
-				recipes.addAll(getPopularRecipes());
-			}
+//			List<UserRecipePreference> userFavoriteRecipes = getUserFavoriteRecipes(userId);
+//			List<UserRecipePreference> otherUserFavoriteRecipes = getAllUserFavoriteRecipesExpcept(userId);
+//			List<Integer>recipesId = reicpesRecommendationGenerator.generateRecommendations(userId, userFavoriteRecipes, otherUserFavoriteRecipes);
+//			recipes = getRecipes(recipesId, threshold);
+//			if(recipes.isEmpty() || recipes.size() < threshold) {
+//				Integer resultSize = threshold - recipes.size();
+//				recipes.addAll(getPopularRecipes(resultSize));
+//			}
 		}
 		
 		return recipes;
 	}
-	private List<Recipe> getPopularRecipes(){
-		return recipeDAO.getPopularUniqueRecipes();
+	
+	private List<Recipe> getPopularRecipes(Integer resultSize){
+		return recipeDAO.getPopularUniqueRecipes(resultSize);
 	}
 	
-	private List<UserFavoriteRecipe> getUserFavoriteRecipes(String userId) {
+	private List<UserRecipePreference> getUserFavoriteRecipes(String userId) {
 		return favoriteRecipeDAO.findAll(userId);
 	}
 	
-	private List<UserFavoriteRecipe> getAllUserFavoriteRecipesExpcept(String userId) {
-		return favoriteRecipeDAO.findAllExceptUser(userId);
-	}
 	
 	private List<Recipe>getRecipes(List<Integer>recipesId, Integer threshold) {
 		int count = 0;

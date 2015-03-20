@@ -60,7 +60,7 @@ public class BigOvenRecipeDTO extends RecipeDTO {
 				JsonArray results =  recipeInfo.getAsJsonArray("Ingredients");
 				for(int i = 0; i < results.size(); i++){ 
 					JsonObject ingredientInfo = results.get(i).getAsJsonObject(); 
-					Ingredient ingredient = parseIngredient(ingredientInfo);
+					Ingredient ingredient = parseIngredient(ingredientInfo, recipe.getRecipeId());
 					ingredients.add(ingredient);
 				} 
 				recipe.setIngredients(ingredients);
@@ -123,7 +123,7 @@ public class BigOvenRecipeDTO extends RecipeDTO {
 		return nutrition;
 	}
 
-	private Ingredient parseIngredient(JsonObject responseInfo) {
+	private Ingredient parseIngredient(JsonObject responseInfo, Integer recipeId) {
 		Ingredient ingredient = new Ingredient();
 		ingredient.setDisplayIndex(getJsonObjectAsInt(responseInfo, "DisplayIndex"));
 		ingredient.setIngredientID(getJsonObjectAsInt(responseInfo, "IngredientID"));
@@ -137,6 +137,7 @@ public class BigOvenRecipeDTO extends RecipeDTO {
 		ingredient.setQuantity(getJsonObjectAsInt(responseInfo, "Quantity"));
 		ingredient.setUnit(getJsonObjectAsString(responseInfo, "Unit"));
 		ingredient.setDisplayQuantity(getJsonObjectAsString(responseInfo, "DisplayQuantity"));
+		ingredient.setRecipeId(recipeId);
 
 		//IngredientInfo
 		if (hasJsonObject(responseInfo, "IngredientInfo")) {
