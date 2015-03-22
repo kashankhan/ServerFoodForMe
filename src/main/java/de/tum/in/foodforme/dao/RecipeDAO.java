@@ -8,6 +8,7 @@ import javax.persistence.TypedQuery;
 
 import org.apache.commons.logging.impl.AvalonLogger;
 
+import de.tum.in.foodforme.model.Ingredient;
 import de.tum.in.foodforme.model.Recipe;
 import de.tum.in.foodforme.model.UserRecipePreference;
 
@@ -78,15 +79,14 @@ public class RecipeDAO extends GenericDAO<Recipe> {
 			return null;
 		}
 	}
-
-	public List<Recipe> favoriteIngredentRecipes(String keyword) {
+	
+	public List<Ingredient> getIngredients(String keyword) {
 		try {
 			keyword = "%" + keyword.toLowerCase() + "%";
-			TypedQuery<Recipe> q = em
+			TypedQuery<Ingredient> q = em
 					.createQuery(
-							"select r from Recipe r where"
-									+ "r.ingredients.name = ANY (SELECT i from Ingredient where LOWER(i.name) LIKE :keyword)",
-							Recipe.class);
+							"SELECT i from Ingredient i where LOWER(i.name) LIKE :keyword",
+							Ingredient.class);
 			q.setParameter("keyword", keyword);
 			return q.getResultList();
 		} catch (NoResultException e) {

@@ -20,6 +20,7 @@ import de.tum.in.foodforme.bal.RecipeBALManger;
 import de.tum.in.foodforme.constants.GlobalConstants.RecipeBalType;
 import de.tum.in.foodforme.dao.DAOManager;
 import de.tum.in.foodforme.dao.RecipeDAO;
+import de.tum.in.foodforme.model.Ingredient;
 import de.tum.in.foodforme.model.Recipe;
 
 @Controller
@@ -84,6 +85,5 @@ public class RestRecipe {
 		recipeDAO.rateRecipe(recipeId, userId, starRating, likeIngredients, dislikeIngredients, perferTiming);	
 		
 		return userPreference;
-	}
-	
+	}	
 }
