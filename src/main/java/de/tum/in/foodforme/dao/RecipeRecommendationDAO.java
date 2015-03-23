@@ -31,7 +31,7 @@ public class RecipeRecommendationDAO {
 			recipes = getPopularRecipes(threshold);
 		}
 		else {	
-			recipes = getRecommendations(userId, likeIngredientPreferences, dislikeIngredientPreferences);
+			recipes = getRecommendations(userId, likeIngredientPreferences, dislikeIngredientPreferences, threshold);
 //			if(recipes.isEmpty() || recipes.size() < threshold) {
 //				Integer resultSize = threshold - recipes.size();
 //				recipes.addAll(getPopularRecipes(resultSize));
@@ -96,16 +96,20 @@ public class RecipeRecommendationDAO {
 		return recipes;
 	}
 	
-	List<Recipe>getRecommendations(String userId, List<UserIngredientPreference>likeIngredientPreferences, List<UserIngredientPreference>dislikeIngredientPreferences){
+	List<Recipe>getRecommendations(String userId, List<UserIngredientPreference>likeIngredientPreferences, List<UserIngredientPreference>dislikeIngredientPreferences, Integer maxRecommendation){
 		List<String>likeIngredientsName = filterDistincIngredientsName(likeIngredientPreferences);
 		List<String>dislikeIngredientsName = filterDistincIngredientsName(dislikeIngredientPreferences);
 		Integer preferCookingTime = getUserPreferRecipeTime(userId);
 		List<Recipe>recommendedRecipes = new ArrayList<Recipe>();
 		List<Recipe>recipes = getPerferRecipes(likeIngredientsName);
+		Integer counter = 0;
 		for(Iterator<Recipe> r = recipes.iterator(); r.hasNext(); ) {
 			Recipe recipe = r.next();
 			if(matchUserTaste(recipe, dislikeIngredientsName, preferCookingTime)) {
 				recommendedRecipes.add(recipe);
+				counter++;
+				if(counter == maxRecommendation)
+					break;
 			}
 		}
 		return recommendedRecipes;
