@@ -43,7 +43,7 @@ public class UserIngredientPreferenceDAO extends GenericDAO<UserIngredientPrefer
 	public List<UserIngredientPreference> findAll(String userId, boolean favorite) {
 		try {
 			TypedQuery<UserIngredientPreference> q = em.createQuery("select u from UserIngredientPreference u where u.userId=:userId"
-					+ " u.favorite=:favorite", UserIngredientPreference.class);
+					+ " AND u.favorite=:favorite", UserIngredientPreference.class);
 			q.setParameter("userId", userId);
 			q.setParameter("favorite", favorite);
 			return q.getResultList();

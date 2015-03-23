@@ -7,7 +7,6 @@ import java.util.List;
 import de.tum.in.foodforme.model.Ingredient;
 import de.tum.in.foodforme.model.Recipe;
 import de.tum.in.foodforme.model.UserIngredientPreference;
-import de.tum.in.foodforme.model.UserRecipePreference;
 import de.tum.in.foodforme.model.UserRecipeTimePreference;
 
 public class RecipeRecommendationDAO {
@@ -33,10 +32,10 @@ public class RecipeRecommendationDAO {
 		}
 		else {	
 			recipes = getRecommendations(userId, likeIngredientPreferences, dislikeIngredientPreferences);
-			if(recipes.isEmpty() || recipes.size() < threshold) {
-				Integer resultSize = threshold - recipes.size();
-				recipes.addAll(getPopularRecipes(resultSize));
-			}
+//			if(recipes.isEmpty() || recipes.size() < threshold) {
+//				Integer resultSize = threshold - recipes.size();
+//				recipes.addAll(getPopularRecipes(resultSize));
+//			}
 		}
 		
 		return recipes;
@@ -49,22 +48,6 @@ public class RecipeRecommendationDAO {
 	private List<UserIngredientPreference>getUserIngredients(String userId, boolean favorite) {
 		return ingredientPreferenceDAO.findAll(userId, favorite);
 		
-	}
-	
-	private List<Recipe>getRecipes(List<Integer>recipesId, Integer threshold) {
-		int count = 0;
-		List<Recipe> recipes = new ArrayList<Recipe>();
-		for(Iterator<Integer> r = recipesId.iterator(); r.hasNext(); ) {
-			Integer recipeId = r.next();
-			Recipe recipe = recipeDAO.getRecipe(recipeId);
-			if(recipe != null) {
-				recipes.add(recipe);
-				count++;
-			}
-			if (count == threshold) 
-				break;
-		}
-		return recipes;
 	}
 	
 	List<String>filterDistincIngredientsName(List<UserIngredientPreference> preferences){
@@ -86,9 +69,7 @@ public class RecipeRecommendationDAO {
 			String keyword = i.next();
 			ingredients.addAll(recipeDAO.getIngredients(keyword));
 		}
-		
 		return ingredients;
-		
 	}
 	
 	Integer getUserPreferRecipeTime(String userId) {
@@ -132,14 +113,17 @@ public class RecipeRecommendationDAO {
 	
 	boolean matchUserTaste(Recipe recipe, List<String>dislikeIngredientsName, Integer preferCookingTime) {
 		boolean tasteMatches = true;
-		tasteMatches = (preferCookingTime > 0 && (recipe.getActiveMinutes() <= preferCookingTime ||
-				recipe.getTotalMinutes() <= preferCookingTime));
+		preferCookingTime = 90;
+		if(preferCookingTime > 0) {
+			tasteMatches = (recipe.getTotalMinutes() <= preferCookingTime);		
+		}
 		for(Iterator<Ingredient> i = recipe.getIngredients().iterator(); i.hasNext(); ) {
 			Ingredient ingredient = i.next();
 			if(tasteMatches) {
 				for(Iterator<String> d = dislikeIngredientsName.iterator(); d.hasNext(); ) {
 					String name = d.next();
-					if(name.toLowerCase().equals(ingredient.getName().toLowerCase())){
+					if((name.toLowerCase().contains(ingredient.getName().toLowerCase())) 
+							|| (ingredient.getName().toLowerCase().contains(name.toLowerCase()))){
 						tasteMatches = false;
 						break;
 					}
