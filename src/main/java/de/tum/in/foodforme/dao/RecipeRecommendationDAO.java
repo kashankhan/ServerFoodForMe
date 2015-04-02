@@ -6,6 +6,7 @@ import java.util.List;
 
 import de.tum.in.foodforme.model.Ingredient;
 import de.tum.in.foodforme.model.Recipe;
+import de.tum.in.foodforme.model.RecommendedRecipe;
 import de.tum.in.foodforme.model.UserIngredientPreference;
 import de.tum.in.foodforme.model.UserRecipeTimePreference;
 
@@ -17,28 +18,28 @@ public class RecipeRecommendationDAO {
 	final UserIngredientPreferenceDAO ingredientPreferenceDAO = DAOManager.createUserIngredentPreferenceDAO();
 	final UserRecipeTimePreferenceDAO timePreferenceDAO  = DAOManager.createUserRecipeTimePreferenceDAO();
 	
-	public List<Recipe> getUserRecipeRecommendation(String userId) {
+	public List<RecommendedRecipe> getUserRecipeRecommendation(String userId) {
 		return getUserRecommendation(userId);
 	}
 
-	private List<Recipe> getUserRecommendation(String userId) {
+	private List<RecommendedRecipe> getUserRecommendation(String userId) {
 		List<Recipe> recipes = null;
 		List<UserIngredientPreference> likeIngredientPreferences = getUserIngredients(userId, true);
 		List<UserIngredientPreference> dislikeIngredientPreferences = getUserIngredients(userId, false);
 		Integer threshold = 10;
+		List<String>likeIngredientsName = filterDistincIngredientsName(likeIngredientPreferences);
+		List<String>dislikeIngredientsName = filterDistincIngredientsName(dislikeIngredientPreferences);
+		Integer preferCookingTime = getUserPreferRecipeTime(userId);
+		
 		//Check if the user favorite recipe list is empty recommend popular recipes. 
 		if(dislikeIngredientPreferences.isEmpty() && likeIngredientPreferences.isEmpty()) {
 			recipes = getPopularRecipes(threshold);
 		}
 		else {	
-			recipes = getRecommendations(userId, likeIngredientPreferences, dislikeIngredientPreferences, threshold);
-//			if(recipes.isEmpty() || recipes.size() < threshold) {
-//				Integer resultSize = threshold - recipes.size();
-//				recipes.addAll(getPopularRecipes(resultSize));
-//			}
+			recipes = getRecommendations(userId, likeIngredientsName, dislikeIngredientsName, threshold, preferCookingTime);
 		}
 		
-		return recipes;
+		return getRecipesExplaination(recipes, likeIngredientsName, preferCookingTime);
 	}
 	
 	private List<Recipe> getPopularRecipes(Integer resultSize){
@@ -96,10 +97,7 @@ public class RecipeRecommendationDAO {
 		return recipes;
 	}
 	
-	List<Recipe>getRecommendations(String userId, List<UserIngredientPreference>likeIngredientPreferences, List<UserIngredientPreference>dislikeIngredientPreferences, Integer maxRecommendation){
-		List<String>likeIngredientsName = filterDistincIngredientsName(likeIngredientPreferences);
-		List<String>dislikeIngredientsName = filterDistincIngredientsName(dislikeIngredientPreferences);
-		Integer preferCookingTime = getUserPreferRecipeTime(userId);
+	List<Recipe>getRecommendations(String userId, List<String>likeIngredientsName, List<String>dislikeIngredientsName, Integer maxRecommendation, Integer preferCookingTime){
 		List<Recipe>recommendedRecipes = new ArrayList<Recipe>();
 		List<Recipe>recipes = getPerferRecipes(likeIngredientsName);
 		Integer counter = 0;
@@ -138,5 +136,17 @@ public class RecipeRecommendationDAO {
 			}
 		}
 		return tasteMatches;
+	}
+	
+	List<RecommendedRecipe>getRecipesExplaination(List<Recipe> recipes, List<String>likeIngredients, Integer preferdTimeToCook){
+		List<RecommendedRecipe> recommendedRecipes =  new ArrayList<RecommendedRecipe>();
+		RecommendedRecipe recommendedRecipe = null;
+		for(Iterator<Recipe> r = recipes.iterator(); r.hasNext(); ) {
+			Recipe recipe = r.next();
+			recommendedRecipe = new RecommendedRecipe(recipe, likeIngredients, preferdTimeToCook);
+			recommendedRecipes.add(recommendedRecipe);
+		}
+		
+		return recommendedRecipes;
 	}
 }

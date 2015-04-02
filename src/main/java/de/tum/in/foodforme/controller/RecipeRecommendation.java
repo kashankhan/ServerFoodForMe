@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import de.tum.in.foodforme.dao.DAOManager;
 import de.tum.in.foodforme.dao.RecipeRecommendationDAO;
-import de.tum.in.foodforme.model.Recipe;
+import de.tum.in.foodforme.model.RecommendedRecipe;
 
 
 @Controller
@@ -20,8 +20,8 @@ public class RecipeRecommendation {
 	
 	@RequestMapping(value="/myrecommendations")
 	@ResponseBody
-	public List<Recipe> getMyRecommendations(@RequestParam(value="userid", required=true) String userId){
-		List<Recipe> recipes = recommendationDAO.getUserRecipeRecommendation(userId);
+	public List<RecommendedRecipe> getMyRecommendations(@RequestParam(value="userid", required=true) String userId){
+		List<RecommendedRecipe> recipes = recommendationDAO.getUserRecipeRecommendation(userId);
 		return recipes;
 	}
 }

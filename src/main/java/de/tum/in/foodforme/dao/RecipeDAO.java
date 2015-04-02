@@ -127,7 +127,7 @@ public class RecipeDAO extends GenericDAO<Recipe> {
 			if (recipe != null && usersStarRating > 0) {
 				usersStarRating = (recipe.getStarRating() + usersStarRating) /2;
 				recipe.setStarRating(usersStarRating);
-				//save(recipe);
+				save(recipe);
 			}
 			
 			userIngredentPreferenceDAO.setUserIngredientPreference(userId, likeIngredients, dislikeIngredients);
