@@ -137,4 +137,15 @@ public class RecipeDAO extends GenericDAO<Recipe> {
 
 		}
 	}
+	
+	public List<String> getAllRecipeCategories() {
+		try {
+			TypedQuery<String> q = em.createQuery(
+					"select DISTINCT r.category from Recipe r  where r.category != \"\"",
+					String.class);
+			return q.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 }

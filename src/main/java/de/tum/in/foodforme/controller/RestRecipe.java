@@ -20,7 +20,6 @@ import de.tum.in.foodforme.bal.RecipeBALManger;
 import de.tum.in.foodforme.constants.GlobalConstants.RecipeBalType;
 import de.tum.in.foodforme.dao.DAOManager;
 import de.tum.in.foodforme.dao.RecipeDAO;
-import de.tum.in.foodforme.model.Ingredient;
 import de.tum.in.foodforme.model.Recipe;
 
 @Controller
@@ -72,7 +71,6 @@ public class RestRecipe {
 		return sycnRecipes;
 	}
 	
-	
 	@RequestMapping(value = "/raterecipe", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> rateRecipe(@RequestBody Map<String, Object> userPreference,  
 			HttpServletRequest request, HttpServletResponse response) { 
@@ -86,4 +84,18 @@ public class RestRecipe {
 		
 		return userPreference;
 	}	
+
+	@RequestMapping(value = "/popularrecipes", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Recipe> popularRecipes(@RequestParam("resultsize") Integer resultSize){
+		List<Recipe> recipes = (List<Recipe>)recipeDAO.getPopularUniqueRecipes(resultSize);
+		return recipes;
+	}
+	
+	@RequestMapping(value = "/allrecipecategories", method = RequestMethod.GET)
+	@ResponseBody
+	public List<String> getAllRecipeCategories(){
+		List<String> catagories = recipeDAO.getAllRecipeCategories();
+		return catagories;
+	}
 }
