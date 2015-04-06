@@ -20,8 +20,9 @@ public class RecipeRecommendation {
 	
 	@RequestMapping(value="/myrecommendations")
 	@ResponseBody
-	public List<RecommendedRecipe> getMyRecommendations(@RequestParam(value="userId", required=true) String userId){
-		List<RecommendedRecipe> recipes = recommendationDAO.getUserRecipeRecommendation(userId);
+	public List<RecommendedRecipe> myRecommendations(@RequestParam("userId") String userId, 
+			@RequestParam(value="pagesize", required=true) Integer pageSize){
+		List<RecommendedRecipe> recipes = recommendationDAO.getUserRecipeRecommendation(userId, pageSize);
 		return recipes;
 	}
 }

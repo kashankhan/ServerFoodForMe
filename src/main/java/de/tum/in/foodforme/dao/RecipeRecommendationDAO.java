@@ -18,25 +18,24 @@ public class RecipeRecommendationDAO {
 	final UserIngredientPreferenceDAO ingredientPreferenceDAO = DAOManager.createUserIngredentPreferenceDAO();
 	final UserRecipeTimePreferenceDAO timePreferenceDAO  = DAOManager.createUserRecipeTimePreferenceDAO();
 	
-	public List<RecommendedRecipe> getUserRecipeRecommendation(String userId) {
-		return getUserRecommendation(userId);
+	public List<RecommendedRecipe> getUserRecipeRecommendation(String userId, Integer pageSize) {
+		return getUserRecommendation(userId, pageSize);
 	}
 
-	private List<RecommendedRecipe> getUserRecommendation(String userId) {
+	private List<RecommendedRecipe> getUserRecommendation(String userId, Integer pageSize) {
 		List<Recipe> recipes = null;
 		List<UserIngredientPreference> likeIngredientPreferences = getUserIngredients(userId, true);
 		List<UserIngredientPreference> dislikeIngredientPreferences = getUserIngredients(userId, false);
-		Integer threshold = 10;
 		List<String>likeIngredientsName = filterDistincIngredientsName(likeIngredientPreferences);
 		List<String>dislikeIngredientsName = filterDistincIngredientsName(dislikeIngredientPreferences);
 		Integer preferCookingTime = getUserPreferRecipeTime(userId);
 		
 		//Check if the user favorite recipe list is empty recommend popular recipes. 
 		if(dislikeIngredientPreferences.isEmpty() && likeIngredientPreferences.isEmpty()) {
-			recipes = getPopularRecipes(threshold);
+			recipes = getPopularRecipes(pageSize);
 		}
 		else {	
-			recipes = getRecommendations(userId, likeIngredientsName, dislikeIngredientsName, threshold, preferCookingTime);
+			recipes = getRecommendations(userId, likeIngredientsName, dislikeIngredientsName, pageSize, preferCookingTime);
 		}
 		
 		return getRecipesExplaination(recipes, likeIngredientsName, preferCookingTime);
