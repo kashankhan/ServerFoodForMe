@@ -92,10 +92,10 @@ public class RestRecipe {
 		return recipes;
 	}
 	
-	@RequestMapping(value = "/allrecipecategories", method = RequestMethod.GET)
+	@RequestMapping(value = "/allcourses", method = RequestMethod.GET)
 	@ResponseBody
-	public List<String> getAllRecipeCategories(){
-		List<String> catagories = recipeDAO.getAllRecipeCategories();
+	public List<String> getAllCourses(){
+		List<String> catagories = recipeDAO.getAllCourses();
 		return catagories;
 	}
 }

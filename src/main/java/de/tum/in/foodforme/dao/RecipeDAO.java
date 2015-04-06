@@ -138,7 +138,7 @@ public class RecipeDAO extends GenericDAO<Recipe> {
 		}
 	}
 	
-	public List<String> getAllRecipeCategories() {
+	public List<String> getAllCourses() {
 		try {
 			TypedQuery<String> q = em.createQuery(
 					"select DISTINCT r.category from Recipe r  where r.category != \"\"",
