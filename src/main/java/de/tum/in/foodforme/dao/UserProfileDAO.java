@@ -6,6 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
+import lombok.Getter;
+import lombok.Setter;
 import de.tum.in.foodforme.model.UserProfile;
 
 public class UserProfileDAO extends GenericDAO<UserProfile>{
@@ -35,6 +37,25 @@ public class UserProfileDAO extends GenericDAO<UserProfile>{
 			// TODO Auto-generated catch block
 			return null;
 		}
+	}
+	
+	public UserProfile saveUserProfile(UserProfile requestUserProfile) {
+		UserProfile profile = getUserProfile(requestUserProfile.getEmail());
+		if (profile == null) {
+			profile = new UserProfile();	
+		}
+		profile.setEmail(requestUserProfile.getEmail());
+		profile.setUserId(requestUserProfile.getUserId());
+		profile.setName(requestUserProfile.getName());
+		profile.setFirstName(requestUserProfile.getFirstName());
+		profile.setLastName(requestUserProfile.getLastName());
+		profile.setBirthday(requestUserProfile.getBirthday());
+		profile.setEmail(requestUserProfile.getEmail());
+		profile.setGender(requestUserProfile.getGender());
+		profile.setProfileLink(requestUserProfile.getProfileLink());
+		
+		save(profile);
+		return profile;
 	}
 
 }

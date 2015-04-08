@@ -47,7 +47,6 @@ public class RestLogin {
 		return userProfile;
 	}
 
-	 
 //	@RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
 //	public @ResponseBody String get(@PathVariable("id") String uId) {
 //		return uId;
