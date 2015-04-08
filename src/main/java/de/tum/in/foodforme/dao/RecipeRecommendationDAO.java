@@ -18,31 +18,30 @@ public class RecipeRecommendationDAO {
 	final UserIngredientPreferenceDAO ingredientPreferenceDAO = DAOManager.createUserIngredentPreferenceDAO();
 	final UserRecipeTimePreferenceDAO timePreferenceDAO  = DAOManager.createUserRecipeTimePreferenceDAO();
 	
-	public List<RecommendedRecipe> getUserRecipeRecommendation(String userId, Integer pageSize) {
-		return getUserRecommendation(userId, pageSize);
+	public List<RecommendedRecipe> getUserRecipeRecommendation(String userId, Integer pageSize, Integer preferCookingTime, String course) {
+		return getUserRecommendation(userId, pageSize, preferCookingTime, course);
 	}
 
-	private List<RecommendedRecipe> getUserRecommendation(String userId, Integer pageSize) {
+	private List<RecommendedRecipe> getUserRecommendation(String userId, Integer pageSize, Integer preferCookingTime, String course) {
 		List<Recipe> recipes = null;
 		List<UserIngredientPreference> likeIngredientPreferences = getUserIngredients(userId, true);
 		List<UserIngredientPreference> dislikeIngredientPreferences = getUserIngredients(userId, false);
 		List<String>likeIngredientsName = filterDistincIngredientsName(likeIngredientPreferences);
 		List<String>dislikeIngredientsName = filterDistincIngredientsName(dislikeIngredientPreferences);
-		Integer preferCookingTime = getUserPreferRecipeTime(userId);
 		
 		//Check if the user favorite recipe list is empty recommend popular recipes. 
 		if(dislikeIngredientPreferences.isEmpty() && likeIngredientPreferences.isEmpty()) {
-			recipes = getPopularRecipes(pageSize);
+			recipes = getPopularRecipes(pageSize, course);
 		}
 		else {	
-			recipes = getRecommendations(userId, likeIngredientsName, dislikeIngredientsName, pageSize, preferCookingTime);
+			recipes = getRecommendations(userId, likeIngredientsName, dislikeIngredientsName, pageSize, preferCookingTime, course);
 		}
 		
 		return getRecipesExplaination(recipes, likeIngredientsName, preferCookingTime);
 	}
 	
-	private List<Recipe> getPopularRecipes(Integer resultSize){
-		return recipeDAO.getPopularUniqueRecipes(resultSize);
+	private List<Recipe> getPopularRecipes(Integer resultSize, String course){
+		return recipeDAO.getPopularRecipes(resultSize, "");
 	}
 	
 	private List<UserIngredientPreference>getUserIngredients(String userId, boolean favorite) {
@@ -83,23 +82,26 @@ public class RecipeRecommendationDAO {
 		return perferTiming;
 	}
 	
-	List<Recipe>getPerferRecipes(List<String>likeIngredients){
+	List<Recipe>getPerferRecipes(List<String>likeIngredients, String course){
 		List<Recipe> recipes = new ArrayList<Recipe>();
 		List<Ingredient> ingredients = getIngredients(likeIngredients);
 		for(Iterator<Ingredient> i = ingredients.iterator(); i.hasNext(); ) {
 			Ingredient ingredient = i.next();
 			Recipe recipe = recipeDAO.getRecipe(ingredient.getRecipeId());
-			if(!recipes.contains(recipe)) {
+			if(!recipes.contains(recipe) && recipe.getCategory().equalsIgnoreCase(course)) {
 				recipes.add(recipe);
 			}
 		}
 		return recipes;
 	}
 	
-	List<Recipe>getRecommendations(String userId, List<String>likeIngredientsName, List<String>dislikeIngredientsName, Integer maxRecommendation, Integer preferCookingTime){
+	List<Recipe>getRecommendations(String userId, List<String>likeIngredientsName, List<String>dislikeIngredientsName, Integer maxRecommendation, Integer preferCookingTime, String course){
 		List<Recipe>recommendedRecipes = new ArrayList<Recipe>();
-		List<Recipe>recipes = getPerferRecipes(likeIngredientsName);
+		List<Recipe>recipes = getPerferRecipes(likeIngredientsName, course);
 		Integer counter = 0;
+		if (recipes.size() < maxRecommendation) {
+			recipes.addAll(getPopularRecipes(maxRecommendation, course));
+		}
 		for(Iterator<Recipe> r = recipes.iterator(); r.hasNext(); ) {
 			Recipe recipe = r.next();
 			if(matchUserTaste(recipe, dislikeIngredientsName, preferCookingTime)) {
@@ -114,7 +116,6 @@ public class RecipeRecommendationDAO {
 	
 	boolean matchUserTaste(Recipe recipe, List<String>dislikeIngredientsName, Integer preferCookingTime) {
 		boolean tasteMatches = true;
-		preferCookingTime = 90;
 		if(preferCookingTime > 0) {
 			tasteMatches = (recipe.getTotalMinutes() <= preferCookingTime);		
 		}

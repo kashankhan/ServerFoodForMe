@@ -94,13 +94,21 @@ public class RecipeDAO extends GenericDAO<Recipe> {
 		}
 	}
 
-	public List<Recipe> getPopularUniqueRecipes(Integer resultSize) {
+	public List<Recipe> getPopularRecipes(Integer resultSize, String course) {
 		try {
-			// TODO, First fetch primary ingredient and based on that create
 			// query
-			TypedQuery<Recipe> q = em.createQuery("select r from Recipe r where r.starRating > 3",
+			boolean requireParameters = true;
+			String query = "select r from Recipe r where r.starRating > 3"; 
+			if(!course.isEmpty()) {
+				query = query + " AND LOWER(r.course) LIKE :course";
+				requireParameters = false;
+			}
+			TypedQuery<Recipe> q = em.createQuery(query,
 					Recipe.class);
 			q.setMaxResults(resultSize);
+			if(requireParameters) {
+				q.setParameter("course", course);
+			}
 			return q.getResultList();
 		} catch (NoResultException e) {
 			return null;
@@ -120,7 +128,7 @@ public class RecipeDAO extends GenericDAO<Recipe> {
 	}
 	
 	public void rateRecipe(Integer recipeId, String userId, Integer starRating, 
-			List<String> likeIngredients, List<String> dislikeIngredients, Integer perferTiming) {
+			List<String> likeIngredients, List<String> dislikeIngredients) {
 		try {
 			Integer usersStarRating = userRecipePreferenceDAO.rateRecipe(userId, recipeId, starRating);
 			Recipe recipe = getRecipe(recipeId);
@@ -131,7 +139,6 @@ public class RecipeDAO extends GenericDAO<Recipe> {
 			}
 			
 			userIngredentPreferenceDAO.setUserIngredientPreference(userId, likeIngredients, dislikeIngredients);
-			userRecipeTimePreferenceDAO.setuserRecipeTimePreference(userId, perferTiming);
 			
 		} catch (NoResultException e) {
 

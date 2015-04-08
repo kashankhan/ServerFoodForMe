@@ -77,18 +77,18 @@ public class RestRecipe {
 		Integer recipeId = (Integer) userPreference.get("recipeId");
 		Integer starRating = (Integer) userPreference.get("starRating");
 		String userId = (String) userPreference.get("userId");
-		Integer perferTiming = (Integer) userPreference.get("perferTiming");
 		List<String> likeIngredients = (List<String>) userPreference.get("likeIngredients");
 		List<String> dislikeIngredients = (List<String>) userPreference.get("dislikeIngredients");
-		recipeDAO.rateRecipe(recipeId, userId, starRating, likeIngredients, dislikeIngredients, perferTiming);	
+		recipeDAO.rateRecipe(recipeId, userId, starRating, likeIngredients, dislikeIngredients);	
 		
 		return userPreference;
 	}	
 
 	@RequestMapping(value = "/popularrecipes", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Recipe> popularRecipes(@RequestParam("resultsize") Integer resultSize){
-		List<Recipe> recipes = (List<Recipe>)recipeDAO.getPopularUniqueRecipes(resultSize);
+	public List<Recipe> popularRecipes(@RequestParam("resultsize") Integer resultSize,
+			@RequestParam("course") String course){
+		List<Recipe> recipes = (List<Recipe>)recipeDAO.getPopularRecipes(resultSize, course);
 		return recipes;
 	}
 	
