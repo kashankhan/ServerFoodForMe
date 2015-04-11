@@ -17,7 +17,7 @@ public class RecipeRecommendationDAO {
 	final UserRecipeTimePreferenceDAO recipeTimePreferenceDAO = DAOManager.createUserRecipeTimePreferenceDAO();
 	final UserIngredientPreferenceDAO ingredientPreferenceDAO = DAOManager.createUserIngredentPreferenceDAO();
 	final UserRecipeTimePreferenceDAO timePreferenceDAO  = DAOManager.createUserRecipeTimePreferenceDAO();
-	
+
 	public List<RecommendedRecipe> getUserRecipeRecommendation(String userId, Integer pageSize, Integer preferCookingTime, String course) {
 		return getUserRecommendation(userId, pageSize, preferCookingTime, course);
 	}
@@ -28,7 +28,7 @@ public class RecipeRecommendationDAO {
 		List<UserIngredientPreference> dislikeIngredientPreferences = getUserIngredients(userId, false);
 		List<String>likeIngredientsName = filterDistincIngredientsName(likeIngredientPreferences);
 		List<String>dislikeIngredientsName = filterDistincIngredientsName(dislikeIngredientPreferences);
-		
+
 		//Check if the user favorite recipe list is empty recommend popular recipes. 
 		if(dislikeIngredientPreferences.isEmpty() && likeIngredientPreferences.isEmpty()) {
 			recipes = getPopularRecipes(pageSize, course);
@@ -36,19 +36,19 @@ public class RecipeRecommendationDAO {
 		else {	
 			recipes = getRecommendations(userId, likeIngredientsName, dislikeIngredientsName, pageSize, preferCookingTime, course);
 		}
-		
+
 		return getRecipesExplaination(recipes, likeIngredientsName, preferCookingTime);
 	}
-	
+
 	private List<Recipe> getPopularRecipes(Integer resultSize, String course){
 		return recipeDAO.getPopularRecipes(resultSize, course);
 	}
-	
+
 	private List<UserIngredientPreference>getUserIngredients(String userId, boolean favorite) {
 		return ingredientPreferenceDAO.findAll(userId, favorite);
-		
+
 	}
-	
+
 	List<String>filterDistincIngredientsName(List<UserIngredientPreference> preferences){
 		List<String>ingredients = new ArrayList<String>();
 		String ingredient = "";
@@ -61,7 +61,7 @@ public class RecipeRecommendationDAO {
 		}
 		return ingredients;
 	}
-	
+
 	List<Ingredient>getIngredients(List<String>ingredientsName) {
 		List<Ingredient>ingredients = new ArrayList<Ingredient>();
 		for(Iterator<String> i = ingredientsName.iterator(); i.hasNext(); ) {
@@ -70,7 +70,7 @@ public class RecipeRecommendationDAO {
 		}
 		return ingredients;
 	}
-	
+
 	Integer getUserPreferRecipeTime(String userId) {
 		Integer perferTiming = 0;
 		List<UserRecipeTimePreference> list = timePreferenceDAO.findAll(userId);
@@ -78,23 +78,25 @@ public class RecipeRecommendationDAO {
 			UserRecipeTimePreference preference = list.get(0);
 			perferTiming = preference.getPerferTiming();
 		}
-		
+
 		return perferTiming;
 	}
-	
+
 	List<Recipe>getPreferRecipes(List<String>likeIngredients, String course){
 		List<Recipe> recipes = new ArrayList<Recipe>();
 		List<Ingredient> ingredients = getIngredients(likeIngredients);
 		for(Iterator<Ingredient> i = ingredients.iterator(); i.hasNext(); ) {
 			Ingredient ingredient = i.next();
-			Recipe recipe = recipeDAO.getRecipe(ingredient.getRecipeId());
-			if(!recipes.contains(recipe) && recipe.getCategory().equalsIgnoreCase(course)) {
-				recipes.add(recipe);
+			if (ingredient.getRecipeId() != null) {
+				Recipe recipe = recipeDAO.getRecipe(ingredient.getRecipeId());
+				if(!recipes.contains(recipe) && recipe.getCategory().equalsIgnoreCase(course)) {
+					recipes.add(recipe);
+				}
 			}
 		}
 		return recipes;
 	}
-	
+
 	List<Recipe>getRecommendations(String userId, List<String>likeIngredientsName, List<String>dislikeIngredientsName, Integer maxRecommendation, Integer preferCookingTime, String course){
 		List<Recipe>recommendedRecipes = new ArrayList<Recipe>();
 		List<Recipe>recipes = getPreferRecipes(likeIngredientsName, course);
@@ -113,7 +115,7 @@ public class RecipeRecommendationDAO {
 		}
 		return recommendedRecipes;
 	}
-	
+
 	boolean matchUserTaste(Recipe recipe, List<String>dislikeIngredientsName, Integer preferCookingTime) {
 		boolean tasteMatches = true;
 		if(preferCookingTime > 0) {
@@ -137,7 +139,7 @@ public class RecipeRecommendationDAO {
 		}
 		return tasteMatches;
 	}
-	
+
 	List<RecommendedRecipe>getRecipesExplaination(List<Recipe> recipes, List<String>likeIngredients, Integer preferdTimeToCook){
 		List<RecommendedRecipe> recommendedRecipes =  new ArrayList<RecommendedRecipe>();
 		RecommendedRecipe recommendedRecipe = null;
@@ -146,7 +148,7 @@ public class RecipeRecommendationDAO {
 			recommendedRecipe = new RecommendedRecipe(recipe, likeIngredients, preferdTimeToCook);
 			recommendedRecipes.add(recommendedRecipe);
 		}
-		
+
 		return recommendedRecipes;
 	}
 }
