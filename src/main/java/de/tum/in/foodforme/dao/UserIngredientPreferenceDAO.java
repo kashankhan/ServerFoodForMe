@@ -88,8 +88,12 @@ public class UserIngredientPreferenceDAO extends GenericDAO<UserIngredientPrefer
 
 	public List<UserIngredientPreference> setUserIngredientPreference(String userId, List<String> likeIngredients, List<String> dislikeIngredients) {
 		List<UserIngredientPreference> list = new ArrayList<UserIngredientPreference>();
-		list.addAll(setUserIngredientPreference(userId, likeIngredients, true));
-		list.addAll(setUserIngredientPreference(userId, dislikeIngredients, false));
+		if (likeIngredients != null) {
+			list.addAll(setUserIngredientPreference(userId, likeIngredients, true));
+		}
+		if(dislikeIngredients != null) {
+			list.addAll(setUserIngredientPreference(userId, dislikeIngredients, false));
+		}
 		return list;
 	}
 	

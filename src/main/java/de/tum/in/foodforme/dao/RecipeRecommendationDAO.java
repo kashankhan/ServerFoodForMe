@@ -41,7 +41,7 @@ public class RecipeRecommendationDAO {
 	}
 	
 	private List<Recipe> getPopularRecipes(Integer resultSize, String course){
-		return recipeDAO.getPopularRecipes(resultSize, "");
+		return recipeDAO.getPopularRecipes(resultSize, course);
 	}
 	
 	private List<UserIngredientPreference>getUserIngredients(String userId, boolean favorite) {
@@ -82,7 +82,7 @@ public class RecipeRecommendationDAO {
 		return perferTiming;
 	}
 	
-	List<Recipe>getPerferRecipes(List<String>likeIngredients, String course){
+	List<Recipe>getPreferRecipes(List<String>likeIngredients, String course){
 		List<Recipe> recipes = new ArrayList<Recipe>();
 		List<Ingredient> ingredients = getIngredients(likeIngredients);
 		for(Iterator<Ingredient> i = ingredients.iterator(); i.hasNext(); ) {
@@ -97,7 +97,7 @@ public class RecipeRecommendationDAO {
 	
 	List<Recipe>getRecommendations(String userId, List<String>likeIngredientsName, List<String>dislikeIngredientsName, Integer maxRecommendation, Integer preferCookingTime, String course){
 		List<Recipe>recommendedRecipes = new ArrayList<Recipe>();
-		List<Recipe>recipes = getPerferRecipes(likeIngredientsName, course);
+		List<Recipe>recipes = getPreferRecipes(likeIngredientsName, course);
 		Integer counter = 0;
 		if (recipes.size() < maxRecommendation) {
 			recipes.addAll(getPopularRecipes(maxRecommendation, course));

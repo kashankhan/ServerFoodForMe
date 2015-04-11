@@ -18,8 +18,6 @@ public class RecipeDAO extends GenericDAO<Recipe> {
 			.createUserRecipePreferenceDAO();
 	private final UserIngredientPreferenceDAO  userIngredentPreferenceDAO = DAOManager.
 			createUserIngredentPreferenceDAO();
-	private final UserRecipeTimePreferenceDAO userRecipeTimePreferenceDAO = DAOManager.
-			createUserRecipeTimePreferenceDAO();
 
 	public RecipeDAO(EntityManager em) {
 		super(em);
@@ -97,11 +95,11 @@ public class RecipeDAO extends GenericDAO<Recipe> {
 	public List<Recipe> getPopularRecipes(Integer resultSize, String course) {
 		try {
 			// query
-			boolean requireParameters = true;
+			boolean requireParameters = false;
 			String query = "select r from Recipe r where r.starRating > 3"; 
 			if(!course.isEmpty()) {
-				query = query + " AND LOWER(r.course) LIKE :course";
-				requireParameters = false;
+				query = query + " AND LOWER(r.category) LIKE :course";
+				requireParameters = true;
 			}
 			TypedQuery<Recipe> q = em.createQuery(query,
 					Recipe.class);
