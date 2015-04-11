@@ -44,6 +44,9 @@ public class UserProfileDAO extends GenericDAO<UserProfile>{
 		if (profile == null) {
 			profile = new UserProfile();	
 		}
+		else {
+			profile.setId(profile.getId());
+		}
 		profile.setEmail(requestUserProfile.getEmail());
 		profile.setUserId(requestUserProfile.getUserId());
 		profile.setName(requestUserProfile.getName());
